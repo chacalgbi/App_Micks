@@ -24,9 +24,18 @@ export const UsersProvider = (props) => {
 
     const acoes = {
         setClientMicksYes(data, action){
-            const oldData = action.payload
+            setCliCPF(action.payload)
             setClientMicks('yes')
-            return {...oldData, clientMicks: clientMicks}
+            
+            let contexto1 = {
+                appLogged: appLogged,
+                clientMicks: 'yes',
+                codCli: codCli,
+                cliCPF: cliCPF,
+                cliCnpj: cliCnpj,
+                userApp: userApp
+            }
+            return contexto1
         },
         setClearAll(data, action){
             setClientMicks('no')

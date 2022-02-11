@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, StatusBar } from 'react-native';
+import { StyleSheet, View, ImageBackground, StatusBar, Dimensions } from 'react-native';
 import backgroundImage from '../img/fibra.jpg'
 
 export default (props)=>{
@@ -15,7 +15,8 @@ export default (props)=>{
 const stl = StyleSheet.create({
     background: {
         flex: 1,
-        width: '100%',
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
         alignItems: 'center',
         justifyContent: 'center'
     }
