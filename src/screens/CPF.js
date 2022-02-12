@@ -173,10 +173,24 @@ export default (props)=>{
                     <Text style={stl.cpfOrCnpj}>{check1 ? 'CPF ?' : 'CNPJ ?'}</Text>
                 </View>
 
-                <AuthInput icon={check1 ? 'domain' : 'account-circle'} keyboardType='numeric' placeholder={check1 ? 'CNPJ: 33.444.555/0001-66' : 'CPF: 123.456.789-00'} company={check1} style={stl.input} value={cpf} onChangeText={ (v) => {setCpf(v); setButton('#080')} } />
-                <Button text='Verificar' func={ ()=>{ respAddress(true); /* getCPFIntegrator(cpf); setSeach(true) */ } } colorText='#FFF' colorButton={button} />
+                <AuthInput
+                    icon={check1 ? 'domain' : 'account-circle'}
+                    keyboardType='numeric' 
+                    placeholder={check1 ? 'CNPJ: 33.444.555/0001-66' : 'CPF: 123.456.789-00'} 
+                    colorIcon={check1 ? '#8A2BE2' : '#FF8C00'}
+                    style={stl.input} 
+                    value={cpf}
+                    onChangeText={ (v) => {setCpf(v); setButton('#080')} }
+                />
+                <Button 
+                    text='Verificar'
+                    func={ ()=>{ respAddress(true); /* getCPFIntegrator(cpf); setSeach(true) */ } }
+                    colorText='#FFF'
+                    colorButton={button}
+                />
                 <Text style={stl.warning}>{warning}</Text>
             </View>
+
             <Msg show={seach}
                 showProgress={true}
                 title="Aguarde..."

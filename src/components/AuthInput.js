@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 export default props => {
     return (
         <View style={[styles.container, props.style]}>
-            <Icon name={props.icon} size={20} style={props.company ? styles.iconCompany : styles.iconUser} />
+            <Icon name={props.icon} size={20} style={[styles.icon, {color: props.colorIcon}]} />
             <TextInput {...props} style={styles.input} />
         </View>
     )
@@ -20,12 +20,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    iconUser: {
-        color: '#FF8C00',
-        marginLeft: 20
-    },
-    iconCompany: {
-        color: '#8A2BE2',
+    icon: {
         marginLeft: 20
     },
     input: {
