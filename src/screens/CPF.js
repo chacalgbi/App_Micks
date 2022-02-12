@@ -1,15 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import UsersContext from '../UserProvider';
-import estilo from '../Estilos';
 import AuthInput from '../components/AuthInput';
-import Back from '../components/Back';
 import Button from '../components/Button';
 import API from '../components/API';
 import Msg from '../components/Msg';
 import ConfirmAddress from './ConfirmAddress';
-import Cadastro from './Cadastro';
 
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
