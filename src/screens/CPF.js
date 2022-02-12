@@ -188,7 +188,7 @@ export default (props)=>{
                 onConfirmPressed={() => { console.log('Clicou em OK') }}
             />
             <Msg show={confirm}
-                showProgress={false}
+                showProgress={true}
                 title="Aviso"
                 message={msg}
                 confirmButtonColor="#191970"
@@ -220,7 +220,9 @@ const stl = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 20,
         width: '90%',
-        borderRadius: 30
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     input: {
         marginTop: 10,

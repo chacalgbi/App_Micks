@@ -15,8 +15,11 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 10,
         padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
-        borderRadius: 7
+        borderRadius: 7,
+        width: '60%'
     },
     buttonText: {
         fontSize: 20

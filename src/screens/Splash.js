@@ -1,14 +1,16 @@
 import React from 'react';
-import { StyleSheet, Image, Dimensions } from 'react-native';
-import UsersContext from '../UserProvider';
+import { StyleSheet, Image, Dimensions, View } from 'react-native';
 import logoMicks from '../img/avatar_micks.png';
-import Back from '../components/Back';
+import LottieView from 'lottie-react-native';
+import { Text } from 'react-native-elements';
 
 export default (props)=>{
 	return (
-        <Back>
+        <View style={stl.container}>
+			<Text h1 style={stl.texto}>Micks Fibra</Text>
             <Image style={stl.img} source={logoMicks} />
-        </Back>
+			<LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/03.json')} />
+        </View>
 	);
 
 };
@@ -17,5 +19,12 @@ const stl = StyleSheet.create({
 	img:{
 		width: Dimensions.get('window').width / 2,
 		height: Dimensions.get('window').width / 2,
+	},
+	container:{
+		justifyContent: 'center',
+        alignItems: 'center',
+	},
+	texto:{
+		color: '#FFF',
 	}
 });
