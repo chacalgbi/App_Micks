@@ -13,24 +13,32 @@ export default (props)=>{
 	const {users_data, dispatch} = useContext(UsersContext)
 
     state ? setTimeout(()=>{ setState(false) }, 200) : console.log("Dados Usuário",users_data)
-/*
-    if(state){
-        return <Splash />
-    }else if(users_data.clientMicks === 'no'){
-        return <CPF />
-    }else if(users_data.userApp === 'no'){
-        return <Cadastro />
-    }else if(users_data.appLogged === 'no'){
-        return <Login />
-    }else{
-        return <Main />
+
+    function set(type, payload){
+        console.log(`UsersContext: Type: ${type}, Payload: ${payload}`)
+        dispatch({
+            type: type,
+            payload: payload
+        })
     }
-*/
+
+    function Screens(){
+        if(state){
+            return <Splash />
+        }else if(users_data.clientMicks === 'no'){
+            return <CPF set={set} />
+        }else if(users_data.userApp === 'no'){
+            return <Cadastro set={set} />
+        }else if(users_data.appLogged === 'no'){
+            return <Login set={set} />
+        }else{
+            return <Main set={set} />
+        }
+    }
+
     return(
         <Back>
-            { state && <Splash />}
-            { state === false && users_data.clientMicks === 'no'  && <CPF />}
-            { state === false && users_data.clientMicks === 'yes' && <Cadastro />}
+            { Screens() }
         </Back>
     )
 

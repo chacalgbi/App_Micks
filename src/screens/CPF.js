@@ -69,13 +69,12 @@ export default (props)=>{
 
         if(value === true){ 
             setMsg("Redirecionando para a tela de cadastro.")
-            setTimeout(()=>{
-                setConfirm(false)
-                dispatch({
-                    type: 'setClientMicksYes',
-                    payload: '014.397.495-58'
-                })
-            }, 4000)
+
+            //Os dois setTimeout abaixo foram necessários para não dar vazamento de memória, problema ocorria quando
+            //chamava a props.set e renderizava outra tela e o modal da MSG ainda não tinha terminado e ele fazia
+            //parte somente dessa tela! Lembrar disso ao longo de outras telas.
+            setTimeout(()=>{ setConfirm(false); }, 3200)
+            setTimeout(()=>{ props.set('setClientMicksYes', '014.397.495-58') }, 4000)
         }else{
             setMsg("O endereço incorreto! Tente novamente.")
             setTimeout(()=>{ setConfirm(false) }, 4000)
@@ -160,7 +159,7 @@ export default (props)=>{
     }
 
 	return (
-        <Back>
+        <>
             {
                 checkClientOk && <ConfirmAddress resp={respAddress} isVisible={checkClientOk} dataClient={objClient} onCancel={()=>{ setCheckClientOk(false) }} />
             }
@@ -178,7 +177,7 @@ export default (props)=>{
                 </View>
 
                 <AuthInput icon={check1 ? 'domain' : 'account-circle'} keyboardType='numeric' placeholder={check1 ? 'CNPJ: 33.444.555/0001-66' : 'CPF: 123.456.789-00'} company={check1} style={stl.input} value={cpf} onChangeText={ (v) => {setCpf(v); setButton('#080')} } />
-                <Button text='Verificar' func={ ()=>{ getCPFIntegrator(cpf); setSeach(true) } } colorText='#FFF' colorButton={button} />
+                <Button text='Verificar' func={ ()=>{ respAddress(true); /* getCPFIntegrator(cpf); setSeach(true) */ } } colorText='#FFF' colorButton={button} />
                 <Text style={stl.warning}>{warning}</Text>
             </View>
             <Msg show={seach}
@@ -201,7 +200,7 @@ export default (props)=>{
                 onCancelPressed={() => { console.log('Cancelou') }}
                 onConfirmPressed={() => { console.log('Clicou em OK') }}
             />
-        </Back>
+        </>
 	);
 
 };
