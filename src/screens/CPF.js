@@ -67,11 +67,17 @@ export default (props)=>{
         if(value === true){ 
             setMsg("Redirecionando para a tela de cadastro.")
 
+            const dataClient = {
+                cliDOC: cpf,
+                codCli: objClient.cliArray,
+                name: objClient.client.nome_cli.replace(/[^a-z0-9\s]/gi, "").substring(26, 0)
+            }
+
             //Os dois setTimeout abaixo foram necessários para não dar vazamento de memória, problema ocorria quando
             //chamava a props.set e renderizava outra tela e o modal da MSG ainda não tinha terminado e ele fazia
             //parte somente dessa tela! Lembrar disso ao longo de outras telas.
             setTimeout(()=>{ setConfirm(false); }, 3200)
-            setTimeout(()=>{ props.set('setClientMicksYes', '014.397.495-58') }, 4000)
+            setTimeout(()=>{ props.set('setClientMicksYes', dataClient) }, 4000)
         }else{
             setMsg("O endereço incorreto! Tente novamente.")
             setTimeout(()=>{ setConfirm(false) }, 4000)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, StatusBar, Dimensions } from 'react-native';
-import backgroundImage from '../img/fibra.jpg'
+import backgroundImage from '../img/azul.jpg'
 
 export default (props)=>{
 

@@ -5565,6 +5565,13 @@
   dependencies:
     "prop-types" "^15.7.2"
 
+"react-native-balloon@^1.0.0":
+  "integrity" "sha512-EB0NIQWnxO2t4eoY8Vt6aGKMfofhqjVF30nFptZLuHOBx37+6qPMgKfBYHv0XSkTndJ09zBxoT9kX2/jAF/L8Q=="
+  "resolved" "https://registry.npmjs.org/react-native-balloon/-/react-native-balloon-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "prop-types" "^15.5.10"
+
 "react-native-codegen@^0.0.8":
   "integrity" "sha512-k/944+0XD+8l7zDaiKfYabyEKmAmyZgS1mj+4LcSRPyHnrjgCHKrh/Y6jM6kucQ6xU1+1uyMmF/dSkikxK8i+Q=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.8.tgz"

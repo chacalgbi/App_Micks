@@ -10,29 +10,31 @@ export const UsersProvider = (props) => {
 	const [userApp, setUserApp]         = useMMKVStorage("userApp", storage, "no");
 	const [appLogged, setAppLogged]     = useMMKVStorage("appLogged", storage, "no");
 	const [codCli, setCodCli]           = useMMKVStorage("codCli", storage, []);
-	const [cliCPF, setCliCPF]           = useMMKVStorage("cliCPF", storage, "");
-	const [cliCnpj, setCliCnpj]         = useMMKVStorage("cliCnpj", storage, "");
+	const [cliDOC, setCliDOC]           = useMMKVStorage("cliDOC", storage, "");
+	const [name, setName]               = useMMKVStorage("name", storage, "");
 
 	let contexto = {
         appLogged: appLogged,
         clientMicks: clientMicks,
         codCli: codCli,
-        cliCPF: cliCPF,
-        cliCnpj: cliCnpj,
+        cliDOC: cliDOC,
+        name: name,
 		userApp: userApp
 	}
 
     const acoes = {
         setClientMicksYes(data, action){
-            setCliCPF(action.payload)
+            setCliDOC(action.payload.cliDOC)
+            setCodCli(action.payload.codCli)
+            setName(action.payload.name)
             setClientMicks('yes')
             
             let contexto1 = {
                 appLogged: appLogged,
                 clientMicks: 'yes',
                 codCli: codCli,
-                cliCPF: cliCPF,
-                cliCnpj: cliCnpj,
+                cliDOC: cliDOC,
+                name: name,
                 userApp: userApp
             }
             return contexto1
@@ -42,12 +44,14 @@ export const UsersProvider = (props) => {
             setUserApp('no')
             setAppLogged('no')
             setCodCli("")
-            setCliCPF("")
+            setCliDOC("")
+            setName("")
             let cleaned = {
                 appLogged: appLogged,
                 clientMicks: clientMicks,
                 codCli: codCli,
-                cliCPF: cliCPF,
+                cliDOC: cliDOC,
+                name: name,
                 userApp: userApp
             }
             return cleaned
