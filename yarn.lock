@@ -5565,13 +5565,6 @@
   dependencies:
     "prop-types" "^15.7.2"
 
-"react-native-balloon@^1.0.0":
-  "integrity" "sha512-EB0NIQWnxO2t4eoY8Vt6aGKMfofhqjVF30nFptZLuHOBx37+6qPMgKfBYHv0XSkTndJ09zBxoT9kX2/jAF/L8Q=="
-  "resolved" "https://registry.npmjs.org/react-native-balloon/-/react-native-balloon-1.0.0.tgz"
-  "version" "1.0.0"
-  dependencies:
-    "prop-types" "^15.5.10"
-
 "react-native-codegen@^0.0.8":
   "integrity" "sha512-k/944+0XD+8l7zDaiKfYabyEKmAmyZgS1mj+4LcSRPyHnrjgCHKrh/Y6jM6kucQ6xU1+1uyMmF/dSkikxK8i+Q=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.8.tgz"
@@ -5632,6 +5625,11 @@
   "resolved" "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz"
   "version" "0.3.1"
 
+"react-native-text-input-mask@^3.1.4":
+  "integrity" "sha512-XhTPL1/Pv0kyuH8TMJGaxfnq5su9e+4G2PLngiismZ4xbP8+W/1ZEH4KQJQV+QkE2I5Oi+lPJXB2E47s60/OBA=="
+  "resolved" "https://registry.npmjs.org/react-native-text-input-mask/-/react-native-text-input-mask-3.1.4.tgz"
+  "version" "3.1.4"
+
 "react-native-vector-icons@^9.0.0", "react-native-vector-icons@>7.0.0":
   "integrity" "sha512-qKX5d5/TafHmI4B7UOSZCL3BAGh7ZfF30iLwRgxBkKfZl2lKSuHp8Ottj9OyWh9b5fFtlg+LtyvZrns3g2kh+w=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-9.0.0.tgz"
@@ -5646,7 +5644,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native@*", "react-native@>=0.46", "react-native@0.67.2":
+"react-native@*", "react-native@>=0.46", "react-native@>=0.62.2", "react-native@0.67.2":
   "integrity" "sha512-grEtpOLLvtSg8Bivg0ffVRCjTkresqMt7Jdog/geF6VAYhb4RnLaaUCWvyrfyB9buf135FKnqg5BIuve/XQNXA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.67.2.tgz"
   "version" "0.67.2"

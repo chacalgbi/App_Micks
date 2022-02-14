@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import UsersContext from '../UserProvider';
 import AuthInput from '../components/AuthInput';
@@ -20,13 +20,16 @@ export default (props)=>{
     const [checkClientOk, setCheckClientOk] = useState(false);
     const [objClient, setObjClient] = useState([]);
 
-    function success(client, cliArray, listAddress){
-        let arrayTemp = {
+    let documentFormated = '';
+
+    function success(client, cod, listAddress, doc){
+        let temp = {
             client: client,
-            cliArray: cliArray,
-            list: listAddress
+            cod: cod,
+            list: listAddress,
+            doc: doc
         }
-        setObjClient(arrayTemp)
+        setObjClient(temp)
         setCheckClientOk(true)
     }
 
@@ -68,10 +71,13 @@ export default (props)=>{
             setMsg("Redirecionando para a tela de cadastro.")
 
             const dataClient = {
-                cliDOC: cpf,
-                codCli: objClient.cliArray,
+                cliDOC: objClient.doc,
+                codCli: objClient.cod,
                 name: objClient.client.nome_cli.replace(/[^a-z0-9\s]/gi, "").substring(26, 0)
             }
+
+            console.log("Objeto")
+            console.log(dataClient)
 
             //Os dois setTimeout abaixo foram necessários para não dar vazamento de memória, problema ocorria quando
             //chamava a props.set e renderizava outra tela e o modal da MSG ainda não tinha terminado e ele fazia
@@ -85,80 +91,57 @@ export default (props)=>{
 
     }
 
-    async function getCPFIntegrator(num){
+    async function handleRequisition(num, type){
+        const obj = type === 'cpf' ? {cpf : num} : {cnpj: num}
+
+        await API(type, obj)
+        .then((res)=>{
+            console.log(res.data.msg)
+            
+            setTimeout(()=>{ setSeach(false) }, 1000)
+
+            if(res.data.erroGeral){
+                setWarning(res.data.msg)
+
+                if(res.data.erroGeral === 'nao'){
+                    if(res.data.dados.errorBD === 'nao'){
+                        let CodCli = ''
+                        res.data.dados.resposta.map((item, index)=>{
+                            CodCli += item.codigo
+                            CodCli += ','
+                        })
+                        const str = CodCli.substring(0, CodCli.length - 1);
+                        success(res.data.dados.resposta[0], str, res.data.listAdress, num)
+                    }else{
+                        showErro('Erro interno, tente novamente mais tarde')
+                    }
+                }else{
+                    setCpf('')
+                    setButton('#B22222')
+                }
+
+            }
+
+        })
+        .catch((e)=>{
+            setSeach(false)
+            console.log(e);
+            showErro('Erro interno, tente novamente mais tarde')
+        });
+    }
+
+    function getCPFIntegrator(num){
+        let type = ''
 
         if(check1){
-            const cnpjFormated = formatCnpf(num)
-            console.log(cnpjFormated)
-
-            await API('cnpj',{cnpj: cnpjFormated})
-            .then((res)=>{
-                console.log(res.data.msg)
-                
-                setTimeout(()=>{ setSeach(false) }, 1000)
-    
-                if(res.data.erroGeral){
-                    setWarning(res.data.msg)
-    
-                    if(res.data.erroGeral === 'nao'){
-                        if(res.data.dados.errorBD === 'nao'){
-                            let arrayCodCli = []
-                            res.data.dados.resposta.map((item, index)=>{
-                                arrayCodCli.push(item.codigo)
-                            })
-                            success(res.data.dados.resposta[0], arrayCodCli, res.data.listAdress)
-                        }else{
-                            showErro('Erro interno, tente novamente mais tarde')
-                        }
-                    }else{
-                        setCpf('')
-                        setButton('#B22222')
-                    }
-    
-                }
-    
-            })
-            .catch((e)=>{
-                setSeach(false)
-                console.log(e);
-            });
-
+            type = 'cnpj'
+            documentFormated = formatCnpf(num)
         }else{
-            const cpfFormated = formatCpf(num)
-            console.log(cpfFormated)
-    
-            await API('cpf',{cpf: cpfFormated})
-            .then((res)=>{
-                console.log(res.data.msg)
-                
-                setTimeout(()=>{ setSeach(false) }, 1000)
-    
-                if(res.data.erroGeral){
-                    setWarning(res.data.msg)
-    
-                    if(res.data.erroGeral === 'nao'){
-                        if(res.data.dados.errorBD === 'nao'){
-                            let arrayCodCli = []
-                            res.data.dados.resposta.map((item, index)=>{
-                                arrayCodCli.push(item.codigo)
-                            })
-                            success(res.data.dados.resposta[0], arrayCodCli, res.data.listAdress)
-                        }else{
-                            showErro('Erro interno, tente novamente mais tarde')
-                        }
-                    }else{
-                        setCpf('')
-                        setButton('#B22222')
-                    }
-    
-                }
-    
-            })
-            .catch((e)=>{
-                setSeach(false)
-                console.log(e);
-            });
+            type = 'cpf'
+            documentFormated = formatCpf(num)
         }
+
+        handleRequisition(documentFormated, type)
     }
 
 	return (
@@ -175,7 +158,8 @@ export default (props)=>{
                     <CheckBox center 
                         checkedIcon={ <Icon name="radio-button-checked" type="material" color="#8A2BE2" size={25} /> }
                         uncheckedIcon={ <Icon name="radio-button-unchecked" type="material" color="#FF8C00" size={25} /> }
-                        checked={check1} onPress={ () => setCheck1(!check1) } />
+                        checked={check1} onPress={ () => setCheck1(!check1) }
+                    />
                     <Text style={stl.cpfOrCnpj}>{check1 ? 'CPF ?' : 'CNPJ ?'}</Text>
                 </View>
 
@@ -190,7 +174,7 @@ export default (props)=>{
                 />
                 <Button 
                     text='Verificar'
-                    func={ ()=>{ respAddress(true); /* getCPFIntegrator(cpf); setSeach(true) */ } }
+                    func={ ()=>{ getCPFIntegrator(cpf); setSeach(true) } }
                     colorText='#FFF'
                     colorButton={button}
                 />
@@ -258,6 +242,7 @@ const stl = StyleSheet.create({
         color: '#FFF',
         fontSize: 20,
         textAlign: 'center',
+        paddingRight: 15
     },
     viewCpfOrCnpj:{
         flexDirection: 'row',

@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import TextInputMask from 'react-native-text-input-mask';
 
 export default props => {
     return (
         <View style={[styles.container, props.style]}>
             <Icon name={props.icon} size={20} style={[styles.icon, {color: props.colorIcon}]} />
-            <TextInput {...props} style={styles.input} />
+            <TextInputMask {...props} style={styles.input} />
         </View>
     )
 }

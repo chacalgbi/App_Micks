@@ -9,9 +9,10 @@ export const UsersProvider = (props) => {
 	const [clientMicks, setClientMicks] = useMMKVStorage("clientMicks", storage, "no");
 	const [userApp, setUserApp]         = useMMKVStorage("userApp", storage, "no");
 	const [appLogged, setAppLogged]     = useMMKVStorage("appLogged", storage, "no");
-	const [codCli, setCodCli]           = useMMKVStorage("codCli", storage, []);
+	const [codCli, setCodCli]           = useMMKVStorage("codCli", storage, "");
 	const [cliDOC, setCliDOC]           = useMMKVStorage("cliDOC", storage, "");
 	const [name, setName]               = useMMKVStorage("name", storage, "");
+	const [email, setEmail]             = useMMKVStorage("email", storage, "");
 
 	let contexto = {
         appLogged: appLogged,
@@ -19,7 +20,8 @@ export const UsersProvider = (props) => {
         codCli: codCli,
         cliDOC: cliDOC,
         name: name,
-		userApp: userApp
+		userApp: userApp,
+        email, email
 	}
 
     const acoes = {
@@ -28,31 +30,63 @@ export const UsersProvider = (props) => {
             setCodCli(action.payload.codCli)
             setName(action.payload.name)
             setClientMicks('yes')
-            
+            let contexto1 = {
+                appLogged: appLogged,
+                clientMicks: 'yes',
+                codCli: action.payload.codCli,
+                cliDOC: action.payload.cliDOC,
+                name: action.payload.name,
+                userApp: userApp,
+                email: email
+            }
+            return contexto1
+        },
+        setUserAppYes(data, action){
+            setUserApp('yes')
+            setClientMicks('yes')
+            setEmail(action.payload)
             let contexto1 = {
                 appLogged: appLogged,
                 clientMicks: 'yes',
                 codCli: codCli,
                 cliDOC: cliDOC,
                 name: name,
-                userApp: userApp
+                userApp: 'yes',
+                email: action.payload
+            }
+            return contexto1
+        },
+        setAppLoggedYes(data, action){
+            setUserApp('yes')
+            setClientMicks('yes')
+            setAppLogged('yes')
+            let contexto1 = {
+                appLogged: 'yes',
+                clientMicks: 'yes',
+                codCli: codCli,
+                cliDOC: cliDOC,
+                name: name,
+                userApp: 'yes',
+                email: email
             }
             return contexto1
         },
         setClearAll(data, action){
-            setClientMicks('no')
-            setUserApp('no')
-            setAppLogged('no')
-            setCodCli("")
-            setCliDOC("")
-            setName("")
+            setClientMicks()
+            setUserApp()
+            setAppLogged()
+            setCodCli()
+            setCliDOC()
+            setName()
+            setEmail()
             let cleaned = {
                 appLogged: appLogged,
                 clientMicks: clientMicks,
                 codCli: codCli,
                 cliDOC: cliDOC,
                 name: name,
-                userApp: userApp
+                userApp: userApp,
+                email: email
             }
             return cleaned
         }
