@@ -5,7 +5,7 @@ const server = 'http://172.17.1.240:8080/';
 export default (endPoint, obj)=>{
 
     return new Promise((resolve, reject)=>{
-        axios.post(`${server}${endPoint}`, obj)
+        axios.post(`${server}${endPoint}`, obj, {timeout: 20000})
         .then((res)=>{
             resolve(res);
         })

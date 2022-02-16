@@ -1,40 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, Text, View, TouchableWithoutFeedback, FlatList, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Modal, Text, View, TouchableWithoutFeedback, FlatList, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Button } from 'react-native-elements';
 
 function AddressUnit(props){
 
     return (
-        <View style={stl.containerAddress}>
-            <View style={stl.view1}>
-                <Text style={stl.item1}>{props.ad.item.adress}</Text>
-            </View>
-            <View style={stl.view2}>
-                <Button
-                    onPress={()=>{props.func(props.ad.item.id, props.ad.item.correct)}}
-                    icon={{
-                        name: 'home',
-                        type: 'font-awesome',
-                        size: 20,
-                        color: 'white',
-                    }}
-                    iconContainerStyle={{ marginRight: 10 }}
-                    titleStyle={{ fontWeight: '700' }}
-                    buttonStyle={{
-                        backgroundColor: 'rgba(90, 154, 230, 1)',
-                        borderColor: 'transparent',
-                        borderWidth: 0,
-                        borderRadius: 25,
-                    }}
-                    containerStyle={{
-                        width: 50,
-                        marginHorizontal: 5,
-                        marginVertical: 5,
-                    }}
-                />
-            </View>
-        </View>
+        <TouchableOpacity style={stl.containerAddress} onPress={()=>{props.func(props.ad.item.id, props.ad.item.correct)}}>
+            <Icon name='map-marker' size={30} style={stl.icon} />
+            <Text style={stl.item1}>{props.ad.item.adress}</Text>
+        </TouchableOpacity>
     );
 }
 
@@ -73,19 +48,25 @@ const stl = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)'
     },
     key:{
-        flex: 4
+        flex: 5
     },
     container:{
         flex: 1,
-        backgroundColor: '#1C1C1C'
+        backgroundColor: '#4F4F4F'
+    },
+    icon: {
+        marginLeft: 10,
+        color: '#FFFFFF'
     },
     containerAddress:{
-        
+        borderWidth: 2,
+        borderColor: 'rgba(90, 154, 230, 1)',
+        borderRadius: 20,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 2,
+        justifyContent: 'flex-start',
+        margin: 8
     },
     view1:{
         height: 45,

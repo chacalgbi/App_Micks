@@ -25,6 +25,6 @@ const stl = StyleSheet.create({
         alignItems: 'center',
 	},
 	texto:{
-		color: '#FFF',
+		color: '#4F4F4F',
 	}
 });

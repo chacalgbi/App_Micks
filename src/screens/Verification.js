@@ -12,7 +12,7 @@ export default (props)=>{
     const [state, setState] = useState(true)
 	const {users_data, dispatch} = useContext(UsersContext)
 
-    state ? setTimeout(()=>{ setState(false) }, 1000) : console.log("Dados Usuário",users_data)
+    state ? setTimeout(()=>{ setState(false) }, 3000) : console.log("Dados Usuário",users_data)
 
     function set(type, payload){
         console.log(`UsersContext: Type: ${type}, Payload: ${payload}`)
