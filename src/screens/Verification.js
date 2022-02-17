@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import Main from './Main';
 import Splash from './Splash';
 import Cadastro from './Cadastro';
@@ -12,7 +11,7 @@ export default (props)=>{
     const [state, setState] = useState(true)
 	const {users_data, dispatch} = useContext(UsersContext)
 
-    state ? setTimeout(()=>{ setState(false) }, 3000) : console.log("Dados Usuário",users_data)
+    state === true ? setTimeout(()=>{ setState(false) }, 500) : console.log("Dados Usuário",users_data)
 
     function set(type, payload){
         console.log(`UsersContext: Type: ${type}, Payload: ${payload}`)

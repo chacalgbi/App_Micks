@@ -10,6 +10,8 @@ export const UsersProvider = (props) => {
 	const [userApp, setUserApp]         = useMMKVStorage("userApp", storage, "no");
 	const [appLogged, setAppLogged]     = useMMKVStorage("appLogged", storage, "no");
 	const [codCli, setCodCli]           = useMMKVStorage("codCli", storage, "");
+	const [codsercli, setCodSerCli]     = useMMKVStorage("codsercli", storage, "");
+	const [descriSer, setDescriSer]     = useMMKVStorage("descriSer", storage, "");
 	const [cliDOC, setCliDOC]           = useMMKVStorage("cliDOC", storage, "");
 	const [name, setName]               = useMMKVStorage("name", storage, "");
 	const [email, setEmail]             = useMMKVStorage("email", storage, "");
@@ -19,6 +21,8 @@ export const UsersProvider = (props) => {
         clientMicks: clientMicks,
         codCli: codCli,
         cliDOC: cliDOC,
+        codsercli: codsercli,
+        descriSer: descriSer,
         name: name,
 		userApp: userApp,
         email, email
@@ -29,11 +33,15 @@ export const UsersProvider = (props) => {
             setCliDOC(action.payload.cliDOC)
             setCodCli(action.payload.codCli)
             setName(action.payload.name)
+            setCodSerCli(action.payload.codsercli)
+            setDescriSer(action.payload.descriSer)
             setClientMicks('yes')
             let contexto1 = {
                 appLogged: appLogged,
                 clientMicks: 'yes',
                 codCli: action.payload.codCli,
+                codsercli: action.payload.codsercli,
+                descriSer: action.payload.descriSer,
                 cliDOC: action.payload.cliDOC,
                 name: action.payload.name,
                 userApp: userApp,
@@ -49,6 +57,8 @@ export const UsersProvider = (props) => {
                 appLogged: appLogged,
                 clientMicks: 'yes',
                 codCli: codCli,
+                codsercli: codsercli,
+                descriSer: descriSer,
                 cliDOC: cliDOC,
                 name: name,
                 userApp: 'yes',
@@ -57,38 +67,72 @@ export const UsersProvider = (props) => {
             return contexto1
         },
         setAppLoggedYes(data, action){
+
+            setCodCli(action.payload.codCli)
+            setCodSerCli(action.payload.codsercli)
+            setDescriSer(action.payload.descriSer)
+            setCliDOC(action.payload.doc)
+            setName(action.payload.nome)
+            setEmail(action.payload.email)
+
             setUserApp('yes')
-            setClientMicks('yes')
             setAppLogged('yes')
+            setClientMicks('yes')
+
             let contexto1 = {
+                userApp: 'yes',
                 appLogged: 'yes',
                 clientMicks: 'yes',
-                codCli: codCli,
-                cliDOC: cliDOC,
-                name: name,
-                userApp: 'yes',
-                email: email
+
+                codCli: action.payload.codCli,
+                codsercli: action.payload.codsercli,
+                descriSer: action.payload.descriSer,
+                cliDOC: action.payload.doc,
+                name: action.payload.nome,
+                email: action.payload.email
             }
             return contexto1
         },
         setClearAll(data, action){
-            setClientMicks()
-            setUserApp()
-            setAppLogged()
-            setCodCli()
-            setCliDOC()
-            setName()
-            setEmail()
+            setClientMicks('no')
+            setUserApp('no')
+            setAppLogged('no')
+            setCodCli('')
+            setCodSerCli('')
+            setDescriSer('')
+            setCliDOC('')
+            setName('')
+            setEmail('')
             let cleaned = {
-                appLogged: appLogged,
-                clientMicks: clientMicks,
-                codCli: codCli,
-                cliDOC: cliDOC,
-                name: name,
-                userApp: userApp,
-                email: email
+                appLogged: 'no',
+                clientMicks: 'no',
+                userApp: 'no',
+                codCli: '',
+                codsercli: '',
+                descriSer: '',
+                cliDOC: '',
+                name: '',
+                email: ''
             }
             return cleaned
+        },
+        jaTenhoConta(data, action){
+            setUserApp('yes')
+            setClientMicks('yes')
+            setAppLogged('no')
+            
+            let contexto = {
+                appLogged: 'no',
+                clientMicks: 'yes',
+                userApp: 'yes',
+                codCli: codCli,
+                codsercli: codsercli,
+                descriSer: descriSer,
+                cliDOC: cliDOC,
+                name: name,
+                email: email
+            }
+            return contexto
         }
     }
 

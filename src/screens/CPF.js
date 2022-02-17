@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import UsersContext from '../UserProvider';
 import AuthInput from '../components/AuthInput';
@@ -22,10 +22,12 @@ export default (props)=>{
 
     let documentFormated = '';
 
-    function success(client, cod, listAddress, doc){
+    function success(client, cod, codsercli, descriSer, listAddress, doc){
         let temp = {
             client: client,
             cod: cod,
+            codsercli: codsercli,
+            descriSer: descriSer,
             list: listAddress,
             doc: doc
         }
@@ -73,6 +75,8 @@ export default (props)=>{
             const dataClient = {
                 cliDOC: objClient.doc,
                 codCli: objClient.cod,
+                codsercli: objClient.codsercli,
+                descriSer: objClient.descriSer,
                 name: objClient.client.nome_cli.replace(/[^a-z0-9\s]/gi, "").substring(26, 0)
             }
 
@@ -106,12 +110,23 @@ export default (props)=>{
                 if(res.data.erroGeral === 'nao'){
                     if(res.data.dados.errorBD === 'nao'){
                         let CodCli = ''
+                        let CodSerCli = ''
+                        let DescriSer = ''
                         res.data.dados.resposta.map((item, index)=>{
                             CodCli += item.codigo
                             CodCli += ','
+
+                            CodSerCli += item.codsercli
+                            CodSerCli += ','
+
+                            DescriSer += item.descri_ser
+                            DescriSer += ','
                         })
                         const str = CodCli.substring(0, CodCli.length - 1);
-                        success(res.data.dados.resposta[0], str, res.data.listAdress, num)
+                        const str1 = CodSerCli.substring(0, CodSerCli.length - 1);
+                        const str2 = DescriSer.substring(0, DescriSer.length - 1);
+
+                        success(res.data.dados.resposta[0], str, str1, str2, res.data.listAdress, num)
                     }else{
                         showErro('Erro interno, tente novamente mais tarde')
                     }
@@ -179,6 +194,7 @@ export default (props)=>{
                     colorButton={button}
                 />
                 <Text style={stl.warning}>{warning}</Text>
+                <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
             </View>
 
             <Msg show={seach}

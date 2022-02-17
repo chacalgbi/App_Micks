@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import UsersContext from '../UserProvider';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
@@ -31,7 +31,15 @@ export default (props)=>{
 
                 if(res.data.erroGeral === 'nao'){
                     if(res.data.dados.errorBD === 'nao'){
-                        props.set('setAppLoggedYes', {})
+                        let obj = {
+                            codCli: res.data.dados.resposta[0].cod_cli,
+                            codsercli: res.data.dados.resposta[0].codsercli,
+                            nome: res.data.dados.resposta[0].nome,
+                            email: res.data.dados.resposta[0].email,
+                            doc: res.data.dados.resposta[0].doc,
+                            descriSer: res.data.dados.resposta[0].descriSer,
+                        }
+                        props.set('setAppLoggedYes', obj)
                     }else{
                         showErro('Erro interno, tente novamente mais tarde')
                     }
@@ -65,7 +73,10 @@ export default (props)=>{
             <Text style={stl.subtitle}>Faça seu Login</Text>
             <AuthInput
                 icon={'at'}
-                keyboardType='email-address' 
+                keyboardType='email-address'
+                autoCapitalize='none'
+                autoCorrect={false}
+                autoCompleteType='email'
                 placeholder={'Email cadastrado'} 
                 colorIcon={'#8A2BE2'}
                 style={stl.input} 
@@ -75,6 +86,8 @@ export default (props)=>{
             <AuthInput
                 icon={'key-variant'}
                 secureTextEntry={true}
+                autoCapitalize='none'
+                autoCorrect={false}
                 placeholder={'Digite uma senha'} 
                 colorIcon={'#8A2BE2'}
                 style={stl.input} 
@@ -88,6 +101,7 @@ export default (props)=>{
                 colorButton={button}
             />
             <Text style={stl.warning}>{warning}</Text>
+            <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
         </View>
     );
 

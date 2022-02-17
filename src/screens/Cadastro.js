@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import UsersContext from '../UserProvider';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
@@ -27,7 +27,9 @@ export default (props)=>{
             email: userEmail,
             senha: userPass,
             doc: users_data.cliDOC,
-            cel: cel
+            cel: cel,
+            codsercli: users_data.codsercli,
+            descriSer: users_data.descriSer
         }
 
         await API('insert_user', obj)
@@ -131,6 +133,9 @@ export default (props)=>{
                     colorButton={button}
                 />
                 <Text style={stl.warning}>{warning}</Text>
+                <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
+
             </View>
     );
 

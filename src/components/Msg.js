@@ -7,8 +7,8 @@ export default (props)=>{
         <AwesomeAlert
             {...props}
             animatedValue={0.9}
-            closeOnTouchOutside={true}
-            closeOnHardwareBackPress={true}
+            closeOnTouchOutside={false}
+            closeOnHardwareBackPress={false}
             cancelText="Cancelar"
             confirmText="SIM"
         />
