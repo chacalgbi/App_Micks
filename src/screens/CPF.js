@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
+import LottieView from 'lottie-react-native';
 import UsersContext from '../UserProvider';
 import AuthInput from '../components/AuthInput';
 import Button from '../components/Button';
@@ -13,7 +14,7 @@ export default (props)=>{
     const [cpf, setCpf] = useState('014.397.495-58');
     const [warning, setWarning] = useState('');
     const [msg, setMsg] = useState('');
-    const [button, setButton] = useState('#080');
+    const [button, setButton] = useState('#4460D9');
     const [seach, setSeach] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [check1, setCheck1] = useState(false);
@@ -171,8 +172,8 @@ export default (props)=>{
 
                 <View style={stl.viewCpfOrCnpj}>
                     <CheckBox center 
-                        checkedIcon={ <Icon name="radio-button-checked" type="material" color="#8A2BE2" size={25} /> }
-                        uncheckedIcon={ <Icon name="radio-button-unchecked" type="material" color="#FF8C00" size={25} /> }
+                        checkedIcon={ <Icon name="radio-button-checked" type="material" color="#00CCD3" size={35} /> }
+                        uncheckedIcon={ <Icon name="radio-button-unchecked" type="material" color="#4460D9" size={35} /> }
                         checked={check1} onPress={ () => setCheck1(!check1) }
                     />
                     <Text style={stl.cpfOrCnpj}>{check1 ? 'CPF ?' : 'CNPJ ?'}</Text>
@@ -182,7 +183,7 @@ export default (props)=>{
                     icon={check1 ? 'domain' : 'account-circle'}
                     keyboardType='numeric' 
                     placeholder={check1 ? 'CNPJ: 33.444.555/0001-66' : 'CPF: 123.456.789-00'} 
-                    colorIcon={check1 ? '#8A2BE2' : '#FF8C00'}
+                    colorIcon={check1 ? '#00CCD3' : '#4460D9'}
                     style={stl.input} 
                     value={cpf}
                     onChangeText={ (v) => {setCpf(v); setButton('#080')} }
@@ -191,10 +192,13 @@ export default (props)=>{
                     text='Verificar'
                     func={ ()=>{ getCPFIntegrator(cpf); setSeach(true) } }
                     colorText='#FFF'
-                    colorButton={button}
+                    colorButton={check1 ? '#00CCD3' : '#4460D9'}
                 />
                 <Text style={stl.warning}>{warning}</Text>
                 <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
+                <View style={stl.img}>
+                    <LottieView autoPlay loop style={{ width: 80, height: 80 }} source={require('../img/search.json')} />
+                </View>
             </View>
 
             <Msg show={seach}
@@ -208,7 +212,7 @@ export default (props)=>{
                 onConfirmPressed={() => { console.log('Clicou em OK') }}
             />
             <Msg show={confirm}
-                showProgress={true}
+                showProgress={false}
                 title="Aviso"
                 message={msg}
                 confirmButtonColor="#191970"
@@ -229,6 +233,15 @@ const stl = StyleSheet.create({
         fontSize: 50,
         textAlign: 'center',
         marginBottom: 10
+    },
+    img:{
+        position: 'absolute',
+        right: 1,
+        bottom: 1,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     subtitle: {
         color: '#FFF',

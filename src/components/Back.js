@@ -15,8 +15,8 @@ export default (props)=>{
 const stl = StyleSheet.create({
     background: {
         flex: 1,
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center'
     }

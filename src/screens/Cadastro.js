@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import LottieView from 'lottie-react-native';
 import UsersContext from '../UserProvider';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
@@ -13,8 +14,9 @@ export default (props)=>{
     const [userPass, setUserPass] = useState('123456')
     const [userPassConfirm, setUserPassConfirm] = useState('123456')
     const [warning, setWarning] = useState('')
-    const [button, setButton] = useState('#080');
+    const [button, setButton] = useState('#4460D9');
     const [cel, setCel] = useState('(77) 98818-8514');
+    const colorMicks = '#4460D9'
 
     function showErro(e){
         Alert.alert('Ops!', `${e}`)
@@ -77,6 +79,7 @@ export default (props)=>{
     }
 
     return(
+        <ScrollView style={stl.scroll}>
             <View style={stl.formContainer}>
                 <Text style={stl.title}>{users_data.name}</Text>
                 <Text style={stl.subtitle}>Vamos fazer seu cadastro</Text>
@@ -84,7 +87,7 @@ export default (props)=>{
                     icon={'account-plus-outline'}
                     keyboardType='default' 
                     placeholder={'Digite seu nome'} 
-                    colorIcon={'#8A2BE2'}
+                    colorIcon={colorMicks}
                     style={stl.input} 
                     value={userName}
                     onChangeText={ (v) => {setUserName(v)} }
@@ -93,7 +96,7 @@ export default (props)=>{
                     icon={'at'}
                     keyboardType='email-address' 
                     placeholder={'Digite seu melhor email'} 
-                    colorIcon={'#8A2BE2'}
+                    colorIcon={colorMicks}
                     style={stl.input} 
                     value={userEmail}
                     onChangeText={ (v) => {setUserEmail(v)} }
@@ -102,7 +105,7 @@ export default (props)=>{
                     icon={'whatsapp'}
                     keyboardType='numeric' 
                     placeholder={'Digite seu n° de celular'} 
-                    colorIcon={'#8A2BE2'}
+                    colorIcon={colorMicks}
                     style={stl.input} 
                     value={cel}
                     mask={"([00]) [00000]-[0000]"}
@@ -112,7 +115,7 @@ export default (props)=>{
                     icon={'key-variant'}
                     secureTextEntry={true}
                     placeholder={'Digite uma senha'} 
-                    colorIcon={'#8A2BE2'}
+                    colorIcon={colorMicks}
                     style={stl.input} 
                     value={userPass}
                     onChangeText={ (v) => {setUserPass(v)} }
@@ -121,7 +124,7 @@ export default (props)=>{
                     icon={'shield-key-outline'}
                     secureTextEntry={true} 
                     placeholder={'Confirme sua senha'} 
-                    colorIcon={'#8A2BE2'}
+                    colorIcon={colorMicks}
                     style={stl.input} 
                     value={userPassConfirm}
                     onChangeText={ (v) => {setUserPassConfirm(v)} }
@@ -135,8 +138,13 @@ export default (props)=>{
                 <Text style={stl.warning}>{warning}</Text>
                 <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
-
+                <View style={stl.img}>
+                <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/success.json')} />
+                </View>
+                
             </View>
+            
+        </ScrollView>
     );
 
 };
@@ -145,20 +153,34 @@ const stl = StyleSheet.create({
     title: {
         fontFamily: "Cochin",
         color: '#FFF',
-        fontSize: 25,
+        fontSize: 20,
         textAlign: 'center',
-        marginBottom: 10
+        marginBottom: 8
     },
     subtitle: {
         color: '#FFF',
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center',
         marginBottom: 10
     },
+    scroll:{
+        flex: 1,
+    },
+    img:{
+        position: 'absolute',
+        right: 5,
+        bottom: 1,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     formContainer: {
+        flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: 20,
-        width: '90%',
+        marginTop: 30,
+        padding: 10,
+        margin: 10,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',

@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const server = 'http://172.17.1.240:8080/';
+import { server } from './variables'
 
 export default (endPoint, obj)=>{
 

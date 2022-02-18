@@ -1,14 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Alert, FlatList, TouchableOpacity, Dimensions, BackHandler } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import Clipboard from '@react-native-clipboard/clipboard';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import Pdf from 'react-native-pdf';
 import UsersContext from '../UserProvider';
-import Botao from '../components/Button';
-import AuthInput from '../components/AuthInput'
-
 import API from '../components/API';
 import Msg from '../components/Msg';
 
@@ -19,12 +16,14 @@ export default (props)=>{
 
     const [boletos, setBoletos] = useState([]);
     const [warning, setWarning] = useState('');
+    const [msg, setMsg] = useState('Buscando suas faturas em nosso sistema');
     const [info, setInfo] = useState(false);
-    const [codcli, setCodCli] = useState('');
 
-    function ZerarTudo(){
-        props.set('setClearAll', '')
-    }
+    useEffect(() => {
+        const backAction = () => { props.back(0); return true; };
+        const backHandler = BackHandler.addEventListener( "hardwareBackPress", backAction );
+        return () => backHandler.remove();
+    }, []);
 
     function showErro(e){
         Alert.alert('Ops!', `${e}`)
@@ -40,16 +39,16 @@ export default (props)=>{
         }
         
         setInfo(true)
-        console.log("Códigos de Cliente:")
-        console.log(arrayCoder)
+        console.log("Códigos de Cliente:", arrayCoder)
 
         let boletoTemp = []
         for (const [index, cod] of arrayCoder.entries()) {
 
             await API('faturas_app', {codcli: cod }).then((res)=>{
-                console.log(res.data)
-
+                console.log(res.data.msg)
+                setMsg(res.data.msg)
                 setWarning(res.data.msg)
+
                 if(res.data.erroGeral === 'nao'){
                     res.data.boletos.map((item, index)=>{
                         boletoTemp.push(item)
@@ -76,7 +75,7 @@ export default (props)=>{
     }
 
     useEffect(() => {
-        //getBoletos();
+        getBoletos();
     }, [])
 
     function ListEmpty(){
@@ -138,9 +137,9 @@ export default (props)=>{
 
     function ListBoletos(props){
         const [visible, setVisible] = useState(false);
-        const [iconColorCod, setIconColorCod] = useState('#008ea9');
+        const [iconColorCod, setIconColorCod] = useState('#4460D9');
         const [copyText, setCopyText] = useState('Copiar cód. barra');
-        const [iconColorPdf, setIconColorPdf] = useState('#008ea9');
+        const [iconColorPdf, setIconColorPdf] = useState('#4460D9');
         const [copyTextPdf, setCopyTextPdf] = useState('Baixar fatura');
         const source = { uri: `${props.ad.item.linkPDF}`, cache: false };
 
@@ -194,9 +193,10 @@ export default (props)=>{
             .fetch('GET', `${props.ad.item.linkPDF}`,{},)
             .then((res) => {
                 console.log('The file saved to ', res.path());
+                setCopyTextPdf('Download concluído!');
             })
             .catch((errorMessage, statusCode) => {
-                console.log(errorMessage);
+                setCopyTextPdf('Download malsucedido :(');
             });
         }
 
@@ -218,11 +218,11 @@ export default (props)=>{
                     <Text style={stl.textModal}>Dias em Atraso: { props.ad.item.dias_vencidos > 0 ? props.ad.item.dias_vencidos : 0}</Text>
                     
                     <View style={stl.viewCod}>
-                        <TouchableOpacity style={stl.buttonCopy} onPress={ ()=>{ Clipboard.setString(`${props.ad.item.codBarra}`); setIconColorCod('#008000'); setCopyText('Cod. copiado!') } }>
+                        <TouchableOpacity style={stl.buttonCopy} onPress={ ()=>{ Clipboard.setString(`${props.ad.item.codBarra}`); setIconColorCod('#008000'); setCopyText('Código copiado!') } }>
                             <IconMaterial name='clipboard-check-multiple' size={35} style={{ color: iconColorCod }} />
                             <View style={{flex: 2, fontSize: 10}}><Text style={stl.textModal}>{copyText}</Text></View>
                         </TouchableOpacity> 
-                        <TouchableOpacity style={stl.buttonCopy} onPress={ ()=>{  setIconColorPdf('#008000'); setCopyTextPdf('Download concluido!'); downloadPdf() } }>
+                        <TouchableOpacity style={stl.buttonCopy} onPress={ ()=>{  setIconColorPdf('#008000'); setCopyTextPdf('Efetuando download...'); downloadPdf() } }>
                             <IconMaterial name='file-pdf-box' size={35} style={{ color: iconColorPdf }} />
                             <View style={{flex: 2, fontSize: 10}}><Text style={stl.textModal}>{copyTextPdf}</Text></View>
                         </TouchableOpacity>
@@ -257,56 +257,51 @@ export default (props)=>{
     }
 
     return (
-        <>
-            <Text style={stl.title}>{users_data.name}</Text>
-            <View style={stl.formContainer}>
-            <FlatList 
-                data={boletos}
-                keyExtractor={item => `${Math.floor(Math.random() * 65536)}`}
-                renderItem={(obj)=> <ListBoletos ad={obj} /> }
-                listEmptyComponent={()=>{ <ListEmpty /> }}
-                ItemSeparatorComponent={()=> { return <View style={{ height: 10 }} /> }}
-            />
+        <View style={{flex: 1, width: '100%'}}>
+            <View style={stl.header}>
+                <TouchableOpacity onPress={ ()=>{ props.back(0)} }>
+                    <IconMaterial name='arrow-left-circle-outline' size={50} style={{color: "#4460D9"}} />
+                </TouchableOpacity>
             </View>
-            <Text style={stl.subtitle}>{warning}</Text>
+            <View style={stl.body}>
+                <Text style={stl.title}>{users_data.name}</Text>
+                <View style={stl.formContainer}>
+                <FlatList 
+                    data={boletos}
+                    keyExtractor={item => `${Math.floor(Math.random() * 65536)}`}
+                    renderItem={(obj)=> <ListBoletos ad={obj} /> }
+                    listEmptyComponent={()=>{ <ListEmpty /> }}
+                    ItemSeparatorComponent={()=> { return <View style={{ height: 10 }} /> }}
+                />
+                </View>
+                <Text style={stl.subtitle}>{warning}</Text>
 
-            <Msg show={info}
-                showProgress={true}
-                title="Aguarde..."
-                message={'Buscando suas faturas em nosso sistema'}
-                confirmButtonColor="#080"
-                showCancelButton={false}
-                showConfirmButton={false}
-                onCancelPressed={() => { console.log('Cancelou') }}
-                onConfirmPressed={() => { console.log('Clicou em OK') }}
-            />
+                <Msg show={info}
+                    showProgress={true}
+                    title="Aguarde..."
+                    message={msg}
+                    confirmButtonColor="#080"
+                    showCancelButton={false}
+                    showConfirmButton={false}
+                    onCancelPressed={() => { console.log('Cancelou') }}
+                    onConfirmPressed={() => { console.log('Clicou em OK') }}
+                />
+            </View>
 
-            <Botao
-                text='Zerar'
-                func={ ()=>{ ZerarTudo() } }
-                colorText='#FFFFFF'
-                colorButton='#FF0000'
-            />
-
-            <Botao
-                text='Buscar CodCli'
-                func={ ()=>{ getBoletos(codcli) } }
-                colorText='#FFFFFF'
-                colorButton='#00FF00'
-            />
-
-            <AuthInput
-                icon='account-circle'
-                keyboardType='numeric'
-                colorIcon='#FF8C00'
-                value={codcli}
-                onChangeText={ (v)=>{setCodCli(v) } }
-            />
-        </>
+        </View>
 	);
 };
 
 const stl = StyleSheet.create({
+    header:{
+        marginTop: 25
+    },
+    body:{
+        flex: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
     container: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -315,7 +310,7 @@ const stl = StyleSheet.create({
     buttonCopy:{
         flex: 3,
         borderWidth: 3,
-        borderColor: '#008ea9',
+        borderColor: '#4460D9',
         borderRadius: 20,
         flexDirection: 'row',
         justifyContent: 'flex-start',

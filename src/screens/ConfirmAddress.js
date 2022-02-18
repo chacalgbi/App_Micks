@@ -52,11 +52,11 @@ const stl = StyleSheet.create({
     },
     container:{
         flex: 1,
-        backgroundColor: '#4F4F4F'
+        backgroundColor: '#FFF'
     },
     icon: {
         marginLeft: 10,
-        color: '#FFFFFF'
+        color: '#000000'
     },
     containerAddress:{
         borderWidth: 2,
@@ -75,7 +75,7 @@ const stl = StyleSheet.create({
     },
     item1:{
         fontSize: 17,
-        color: '#FFF',
+        color: '#4460D9',
         fontStyle: 'italic',
         marginLeft: 10
     },
@@ -89,7 +89,7 @@ const stl = StyleSheet.create({
         color: '#FFF',
     },
     header:{
-        backgroundColor: '#B13B44',
+        backgroundColor: '#4460D9',
         color: '#FFF',
         textAlign: 'center',
         padding: 8,

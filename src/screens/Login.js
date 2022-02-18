@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import UsersContext from '../UserProvider';
+import LottieView from 'lottie-react-native';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
 import API from '../components/API';
@@ -8,9 +9,9 @@ import API from '../components/API';
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
     const [userEmail, setUserEmail] = useState(users_data.email)
-    const [userPass, setUserPass] = useState('123456')
+    const [userPass, setUserPass] = useState('')
     const [warning, setWarning] = useState('')
-    const [button, setButton] = useState('#080');
+    const [button, setButton] = useState('#4460D9');
 
     function showErro(e){
         Alert.alert('Ops!', `${e}`)
@@ -78,7 +79,7 @@ export default (props)=>{
                 autoCorrect={false}
                 autoCompleteType='email'
                 placeholder={'Email cadastrado'} 
-                colorIcon={'#8A2BE2'}
+                colorIcon={'#4460D9'}
                 style={stl.input} 
                 value={userEmail}
                 onChangeText={ (v) => {setUserEmail(v)} }
@@ -89,7 +90,7 @@ export default (props)=>{
                 autoCapitalize='none'
                 autoCorrect={false}
                 placeholder={'Digite uma senha'} 
-                colorIcon={'#8A2BE2'}
+                colorIcon={'#4460D9'}
                 style={stl.input} 
                 value={userPass}
                 onChangeText={ (v) => {setUserPass(v)} }
@@ -102,6 +103,9 @@ export default (props)=>{
             />
             <Text style={stl.warning}>{warning}</Text>
             <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
+            <View style={stl.img}>
+                <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/login.json')} />
+            </View>
         </View>
     );
 
@@ -120,6 +124,15 @@ const stl = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         marginBottom: 10
+    },
+    img:{
+        position: 'absolute',
+        right: 5,
+        bottom: 5,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     formContainer: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
