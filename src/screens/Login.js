@@ -5,8 +5,12 @@ import LottieView from 'lottie-react-native';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
 import API from '../components/API';
+import MMKVStorage, { useMMKVStorage } from "react-native-mmkv-storage";
+
+const storage = new MMKVStorage.Loader().withEncryption().initialize();
 
 export default (props)=>{
+    const [token, setToken] = useMMKVStorage("token", storage, "");
     const {users_data, dispatch} = useContext(UsersContext)
     const [userEmail, setUserEmail] = useState(users_data.email)
     const [userPass, setUserPass] = useState('')
@@ -21,6 +25,7 @@ export default (props)=>{
         const obj = {
             email: userEmail,
             senha: userPass,
+            token: token
         }
 
         await API('login', obj)

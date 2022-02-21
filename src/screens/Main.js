@@ -11,6 +11,7 @@ import Desbloqueio from './Desbloqueio';
 import { baner } from '../components/variables'
 
 export default (props)=>{
+
     const BASE_URI = 'https://source.unsplash.com/random?sig=';
     const {users_data, dispatch} = useContext(UsersContext)
     const [tela, setTela] = useState(0)
@@ -35,6 +36,7 @@ export default (props)=>{
                         source={{ uri: baner }}
                         containerStyle={stl.item}
                         PlaceholderContent={<ActivityIndicator />}
+                        resizeMode='contain'
                     />
                 </View>
                 <View style={stl.body}>
@@ -128,8 +130,7 @@ const stl = StyleSheet.create({
     item: {
         flex: 1,
         width: null,
-        height: null,
-        resizeMode: 'contain'
+        height: null
     },
     body:{
         flex: 7,

@@ -1,20 +1,85 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert, FlatList, TouchableOpacity, BackHandler } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity, BackHandler } from 'react-native';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import UsersContext from '../UserProvider';
 import LottieView from 'lottie-react-native';
+import Button from '../components/Button';
+import API from '../components/API';
+import Msg from '../components/Msg';
 
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
-    const [warning, setWarning] = useState('');
+    const [warning, setWarning] = useState('Buscando planos suspensos');
+    const [seach, setSeach] = useState(true);
+    const [plainBlocked, setPlainBlocked] = useState('');
+    const [ok, setOk] = useState(false);
+    const [button, setButton] = useState('#4460D9');
 
-    const faturas = users_data.codsercli.split(',')
+    async function verify(){
+        await API('isBlocked', { codCli: users_data.codCli })
+        .then((res)=>{
+            if(res.data.erroGeral){
+                setWarning(res.data.msg)
+                setTimeout(() => { setSeach(false) }, 500);
+                
+                if(res.data.erroGeral === 'nao'){
+                    let blocked = []
+                    res.data.dados.map((item, index)=>{
+                        if (item.suspenso === true){
+                             blocked.push(item.codsercli)
+                        }
+                    })
+                    let unique = [...new Set(blocked)]; // Tira todos os valores repetidos
+                    if(unique.length === 0){
+                        setWarning("Você não possui planos suspensos por débito!")
+                    }else{
+                        setWarning("Você possui planos suspensos por débito!")
+                        setPlainBlocked(unique)
+                        console.log("Codsercli do plano bloqueado:", unique)
+                    }
+                }
+            }
+        })
+        .catch((e)=>{
+            console.log(e);
+            setWarning(e)
+        });
+    }
+
+    async function solicitar(){
+        setButton('#4460D9')
+        setOk(false)
+        if(plainBlocked.length != 0){
+            for (const [index, cod] of plainBlocked.entries()) {
+                await API('desbloqueio', { codsercli: cod })
+                .then((res)=>{
+                    if(res.data.erroGeral){
+                        setWarning(res.data.msg)
+                        if(res.data.erroGeral === 'nao'){
+                            setOk(true)
+                            setButton('#3CB371')
+                        }else{
+                            setButton('#FF6347')
+                        }
+                    }
+                })
+                .catch((e)=>{
+                    console.log(e);
+                    setWarning(e)
+                });
+            }
+        }
+    }
 
     useEffect(() => {
         const backAction = () => { props.back(0); return true; };
         const backHandler = BackHandler.addEventListener( "hardwareBackPress", backAction );
         return () => backHandler.remove();
     }, []);
+
+    useEffect(()=>{
+        verify()
+    }, [])
 
     return(
         <View style={{flex: 1, width: '100%'}}>
@@ -25,18 +90,31 @@ export default (props)=>{
             </View>
 
             <View style={stl.body}>
-                <FlatList 
-                    data={faturas}
-                    keyExtractor={item => `${Math.floor(Math.random() * 65536)}`}
-                    renderItem={(obj)=> <Text style={{fontSize: 20}}>{`${obj.item}`}</Text> }
-                    listEmptyComponent={()=>{ <Text style={{fontSize: 20}}>Você não possui planos</Text> }}
-                    ItemSeparatorComponent={()=> { return <View style={{ height: 10 }} /> }}
+                <Text style={stl.title}>{warning}</Text>
+                <Button 
+                    text='Solicitar desbloqueio'
+                    func={ ()=>{ solicitar() } }
+                    colorText='#FFF'
+                    colorButton={button}
                 />
+                <LottieView autoPlay={ok}    loop style={{ width: 200, height: 200 }} source={require('../img/ok.json')} />
             </View>
 
             <View style={stl.img}>
                 <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/unlock.json')} />
             </View>
+
+            <Msg show={seach}
+                showProgress={true}
+                title="Aguarde..."
+                message={`Verificando seus planos`}
+                confirmButtonColor="#080"
+                showCancelButton={true}
+                showConfirmButton={false}
+                onCancelPressed={() => { setSeach(false) }}
+                onConfirmPressed={() => { console.log('Clicou em OK') }}
+            />
+
         </View>
         
     )
@@ -59,7 +137,7 @@ const stl = StyleSheet.create({
         flex: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
         marginTop: 10,
         marginBottom: 30,
         marginRight: 10,
@@ -73,8 +151,8 @@ const stl = StyleSheet.create({
         alignItems: 'center',
     },
     title:{
-        fontSize: 18,
-        marginBottom: 20
+        fontSize: 22,
+        margin: 20
     },
     subtitle:{
         fontSize: 14,
