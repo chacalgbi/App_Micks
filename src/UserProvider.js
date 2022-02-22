@@ -15,6 +15,7 @@ export const UsersProvider = (props) => {
 	const [cliDOC, setCliDOC]           = useMMKVStorage("cliDOC", storage, "");
 	const [name, setName]               = useMMKVStorage("name", storage, "");
 	const [email, setEmail]             = useMMKVStorage("email", storage, "");
+	const [login, setLogin]             = useMMKVStorage("login", storage, "");
 
 	let contexto = {
         appLogged: appLogged,
@@ -25,7 +26,8 @@ export const UsersProvider = (props) => {
         descriSer: descriSer,
         name: name,
 		userApp: userApp,
-        email, email
+        email, email,
+        login: login
 	}
 
     const acoes = {
@@ -35,6 +37,7 @@ export const UsersProvider = (props) => {
             setName(action.payload.name)
             setCodSerCli(action.payload.codsercli)
             setDescriSer(action.payload.descriSer)
+            setLogin(action.payload.login)
             setClientMicks('yes')
             let contexto1 = {
                 appLogged: appLogged,
@@ -44,6 +47,7 @@ export const UsersProvider = (props) => {
                 descriSer: action.payload.descriSer,
                 cliDOC: action.payload.cliDOC,
                 name: action.payload.name,
+                login: action.payload.login,
                 userApp: userApp,
                 email: email
             }
@@ -60,6 +64,7 @@ export const UsersProvider = (props) => {
                 codsercli: codsercli,
                 descriSer: descriSer,
                 cliDOC: cliDOC,
+                login: login,
                 name: name,
                 userApp: 'yes',
                 email: action.payload
@@ -74,6 +79,7 @@ export const UsersProvider = (props) => {
             setCliDOC(action.payload.doc)
             setName(action.payload.nome)
             setEmail(action.payload.email)
+            setLogin(action.payload.login)
 
             setUserApp('yes')
             setAppLogged('yes')
@@ -89,7 +95,8 @@ export const UsersProvider = (props) => {
                 descriSer: action.payload.descriSer,
                 cliDOC: action.payload.doc,
                 name: action.payload.nome,
-                email: action.payload.email
+                email: action.payload.email,
+                login: action.payload.login
             }
             return contexto1
         },
@@ -130,7 +137,8 @@ export const UsersProvider = (props) => {
                 descriSer: descriSer,
                 cliDOC: cliDOC,
                 name: name,
-                email: email
+                email: email,
+                login: login
             }
             return contexto
         }

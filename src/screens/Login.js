@@ -44,6 +44,7 @@ export default (props)=>{
                             email: res.data.dados.resposta[0].email,
                             doc: res.data.dados.resposta[0].doc,
                             descriSer: res.data.dados.resposta[0].descriSer,
+                            login: res.data.dados.resposta[0].login,
                         }
                         props.set('setAppLoggedYes', obj)
                     }else{

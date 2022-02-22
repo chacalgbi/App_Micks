@@ -23,14 +23,15 @@ export default (props)=>{
 
     let documentFormated = '';
 
-    function success(client, cod, codsercli, descriSer, listAddress, doc){
+    function success(client, cod, codsercli, descriSer, login, listAddress, doc){
         let temp = {
             client: client,
             cod: cod,
             codsercli: codsercli,
             descriSer: descriSer,
             list: listAddress,
-            doc: doc
+            doc: doc,
+            login: login
         }
         setObjClient(temp)
         setCheckClientOk(true)
@@ -78,6 +79,7 @@ export default (props)=>{
                 codCli: objClient.cod,
                 codsercli: objClient.codsercli,
                 descriSer: objClient.descriSer,
+                login: objClient.login,
                 name: objClient.client.nome_cli.replace(/[^a-z0-9\s]/gi, "").substring(26, 0)
             }
 
@@ -113,21 +115,26 @@ export default (props)=>{
                         let CodCli = ''
                         let CodSerCli = ''
                         let DescriSer = ''
+                        let login = ''
                         res.data.dados.resposta.map((item, index)=>{
                             CodCli += item.codigo
                             CodCli += ','
 
-                            CodSerCli += item.codsercli
+                            CodSerCli += item.codsercli.trim()
                             CodSerCli += ','
 
-                            DescriSer += item.descri_ser
+                            DescriSer += item.descri_ser.trim()
                             DescriSer += ','
+
+                            login += item.login.trim()
+                            login += ','
                         })
                         const str = CodCli.substring(0, CodCli.length - 1);
                         const str1 = CodSerCli.substring(0, CodSerCli.length - 1);
                         const str2 = DescriSer.substring(0, DescriSer.length - 1);
+                        const str3 = login.substring(0, login.length - 1);
 
-                        success(res.data.dados.resposta[0], str, str1, str2, res.data.listAdress, num)
+                        success(res.data.dados.resposta[0], str, str1, str2, str3, res.data.listAdress, num)
                     }else{
                         showErro('Erro interno, tente novamente mais tarde')
                     }

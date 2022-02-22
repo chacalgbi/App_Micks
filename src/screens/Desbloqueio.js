@@ -14,6 +14,7 @@ export default (props)=>{
     const [plainBlocked, setPlainBlocked] = useState('');
     const [ok, setOk] = useState(false);
     const [button, setButton] = useState('#4460D9');
+    const [buttonText, setButtonText] = useState('Solicitar desbloqueio');
 
     async function verify(){
         await API('isBlocked', { codCli: users_data.codCli })
@@ -32,6 +33,7 @@ export default (props)=>{
                     let unique = [...new Set(blocked)]; // Tira todos os valores repetidos
                     if(unique.length === 0){
                         setWarning("Você não possui planos suspensos por débito!")
+                        setButtonText('Tudo certo! :)')
                     }else{
                         setWarning("Você possui planos suspensos por débito!")
                         setPlainBlocked(unique)
@@ -92,7 +94,7 @@ export default (props)=>{
             <View style={stl.body}>
                 <Text style={stl.title}>{warning}</Text>
                 <Button 
-                    text='Solicitar desbloqueio'
+                    text={buttonText}
                     func={ ()=>{ solicitar() } }
                     colorText='#FFF'
                     colorButton={button}

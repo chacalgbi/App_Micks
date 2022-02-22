@@ -31,7 +31,8 @@ export default (props)=>{
             doc: users_data.cliDOC,
             cel: cel,
             codsercli: users_data.codsercli,
-            descriSer: users_data.descriSer
+            descriSer: users_data.descriSer,
+            login: users_data.login
         }
 
         await API('insert_user', obj)

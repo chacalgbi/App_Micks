@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Msg from '../components/Msg';
 import Boleto from './Boleto';
 import Desbloqueio from './Desbloqueio';
+import Extrato from './Extrato';
 import { baner } from '../components/variables'
 
 export default (props)=>{
@@ -45,7 +46,7 @@ export default (props)=>{
                             <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/pay1.json')} />
                             <Text style={{fontSize: 15}}>Faturas</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity  style={stl.itemMenu}>
+                        <TouchableOpacity onPress={ ()=>{ setTela(3) } } style={stl.itemMenu}>
                             <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/wifi.json')} />
                             <Text style={{fontSize: 15}}>Extrato de Conexão</Text>
                         </TouchableOpacity>
@@ -107,6 +108,7 @@ export default (props)=>{
         if(tela === 0){ return <HomeScreen /> }
         if(tela === 1){ return <Boleto back={backTela} /> }
         if(tela === 2){ return <Desbloqueio back={backTela} /> }
+        if(tela === 3){ return <Extrato back={backTela} /> }
     }
 
     return(
