@@ -23,9 +23,7 @@ export default (props)=>{
     const list = []
 
     list.push({title: `${users_data.name}`, containerStyle: { backgroundColor: '#4F4F4F' }, titleStyle: { color: 'white' }})
-    plans.map((item, index)=>{
-        list.push({title: `${item}`})
-    })
+    plans.map((item, index)=>{ list.push({title: `${item}`}) })
     list.push({ title: 'Fechar', containerStyle: { backgroundColor: 'red' }, titleStyle: { color: 'white' }, onPress: () => setIsVisible(false) })
 
     function HomeScreen() {
@@ -111,11 +109,7 @@ export default (props)=>{
         if(tela === 3){ return <Extrato back={backTela} /> }
     }
 
-    return(
-        <>
-            { Telas() }
-        </>
-    )
+    return Telas()
 }
 
 const stl = StyleSheet.create({
