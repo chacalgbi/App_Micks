@@ -65,7 +65,7 @@ export default (props)=>{
 
     function respAddress(value){
 
-        console.log('Valor é: ', value)
+        //console.log('Valor é: ', value)
         setCheckClientOk(false)
         setCpf('')
         setWarning('')
@@ -103,7 +103,7 @@ export default (props)=>{
 
         await API(type, obj)
         .then((res)=>{
-            console.log(res.data.msg)
+            //console.log(res.data.msg)
             
             setTimeout(()=>{ setSeach(false) }, 1000)
 
@@ -116,9 +116,16 @@ export default (props)=>{
                         let CodSerCli = ''
                         let DescriSer = ''
                         let login = ''
+                        let cod_cli_temp1 = 0
                         res.data.dados.resposta.map((item, index)=>{
-                            CodCli += item.codigo
-                            CodCli += ','
+
+                            //Inicio - Usado pra verificar se tem codcli iguais, se tiver salvar só um.
+                            if(cod_cli_temp1 != item.codigo){
+                                CodCli += item.codigo
+                                CodCli += ','
+                            }
+                            cod_cli_temp1 = item.codigo
+                            // Fim
 
                             CodSerCli += item.codsercli.trim()
                             CodSerCli += ','

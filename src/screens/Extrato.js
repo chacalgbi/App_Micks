@@ -86,8 +86,9 @@ export default (props)=>{
             }
         })
         .catch((e)=>{
-            setWarning(e)
+            //setWarning(e)
             console.log(e)
+            setTimeout(() => { setSeach(false) }, 500);
         });
     }
 

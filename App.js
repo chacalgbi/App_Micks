@@ -22,13 +22,13 @@ export default ()=>{
 		onNotification: function (notification) {
 			//console.log("NOTIFICATION 1:", notification);
 			if (notification.foreground){
-				console.log("Notificação chegou! App estava aberto!")
+				//console.log("Notificação chegou! App estava aberto!")
 			}
 		},
 
 		onAction: function (notification) {
-			console.log("ACTION:", notification.action);
-			console.log("NOTIFICATION 2:", notification);
+			//console.log("ACTION:", notification.action);
+			//console.log("NOTIFICATION 2:", notification);
 		},
 
 		onRegistrationError: function(err) { console.error(err.message, err); },

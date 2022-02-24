@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { BottomSheet, ListItem, Image } from 'react-native-elements';
+import { ListItem, Image, SpeedDial } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import UsersContext from '../UserProvider';
@@ -13,11 +13,10 @@ import { baner } from '../components/variables'
 
 export default (props)=>{
 
-    const BASE_URI = 'https://source.unsplash.com/random?sig=';
     const {users_data, dispatch} = useContext(UsersContext)
     const [tela, setTela] = useState(0)
     const [confirm, setConfirm] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
+    const [open, setOpen] = React.useState(false);
 
     const plans = users_data.descriSer.split(',')
     const list = []
@@ -50,27 +49,11 @@ export default (props)=>{
                         </TouchableOpacity>
                     </View>
                     <View style={stl.items}>
-                        <TouchableOpacity onPress={ ()=>{ setTela(2) } } style={stl.itemMenu}>
-                            <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/unlock.json')} />
-                            <Text style={{fontSize: 15}}>Desbloqueio Provisório</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style={stl.itemMenu}>
-                            <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/info.json')} />
-                            <Text style={{fontSize: 15}}>Informações</Text>
-                        </TouchableOpacity>
+
                     </View>
                 </View>
                 <View style={stl.footer}>
-                    <View style={stl.footerA}>
-                        <TouchableOpacity style={stl.viewOpenModal} onPress={ ()=>{ setIsVisible(true) } }>
-                            <Icon name='format-list-bulleted-square' size={30} style={{color: "#4460D9"}} />
-                            <Text style={stl.openListPlains}>Listar Planos</Text>
-                        </TouchableOpacity>
-                        
-                    </View>
-                    <TouchableOpacity style={stl.footerB} onPress={ ()=>{ setConfirm(true) } }>
-                        <Icon name='exit-run' size={30} style={{color: "#000000"}} />
-                    </TouchableOpacity>
+
                 </View>
 
                 <Msg show={confirm}
@@ -84,15 +67,17 @@ export default (props)=>{
                     onConfirmPressed={() => { props.set("jaTenhoConta", {}) }}
                 />
 
-                <BottomSheet modalProps={{}} isVisible={isVisible}>
-                    {list.map((l, i) => (
-                        <ListItem key={i} containerStyle={l.containerStyle} onPress={l.onPress} >
-                            <ListItem.Content>
-                                <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
-                            </ListItem.Content>
-                        </ListItem>
-                    ))}
-                </BottomSheet>
+                <SpeedDial isOpen={open}
+                    icon={{ name: 'menu', color: '#FFF' }} 
+                    openIcon={{ name: 'close', color: '#FFF' }}
+                    onOpen={() => setOpen(!open)}
+                    onClose={() => setOpen(!open)}
+                >
+                    <SpeedDial.Action icon={{ name: 'contact-support', color: '#fff' }} title="Entrar em contato"      onPress={() => console.log('Add Something')} />
+                    <SpeedDial.Action icon={{ name: 'edit',        color: '#fff' }} title="Alterar senha"          onPress={() => console.log('Add Something')} />
+                    <SpeedDial.Action icon={{ name: 'lock-open',   color: '#fff' }} title="Desbloqueio provisório" onPress={() => { setOpen(!open); setTela(2) }} />
+                    <SpeedDial.Action icon={{ name: 'exit-to-app', color: '#fff' }} title="Fazer logoff no APP"    onPress={() => { setOpen(!open); setConfirm(true)} } />
+                </SpeedDial>
 
             </SafeAreaProvider>
         );

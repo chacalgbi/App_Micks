@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
 import API from '../components/API';
 import MMKVStorage, { useMMKVStorage } from "react-native-mmkv-storage";
+import Msg from '../components/Msg';
 
 const storage = new MMKVStorage.Loader().withEncryption().initialize();
 
@@ -15,10 +16,24 @@ export default (props)=>{
     const [userEmail, setUserEmail] = useState(users_data.email)
     const [userPass, setUserPass] = useState('')
     const [warning, setWarning] = useState('')
+    const [msg, setMsg] = useState('')
     const [button, setButton] = useState('#4460D9');
+    const [seach, setSeach] = useState(false);
+    const [redefinition, setRedefinition] = useState(false);
+    const [showProgress, setShowProgress] = useState(true);
 
     function showErro(e){
         Alert.alert('Ops!', `${e}`)
+    }
+
+    function checkEmail(){
+        if(userEmail.length < 10 ){
+            Alert.alert('Ops! Email muito curto!', "Digite um email com pelo menos 10 caracteres.")
+        }else if(userEmail.indexOf('@') == -1 || userEmail.indexOf('.') == -1){
+            Alert.alert('Ops! Email inválido!', "Digite um email válido.")
+        }else{
+            setRedefinition(true)
+        }
     }
 
     async function login(){
@@ -30,7 +45,8 @@ export default (props)=>{
 
         await API('login', obj)
         .then((res)=>{
-            console.log(res.data)
+            //console.log(res.data)
+            setTimeout(()=>{ setSeach(false) }, 1500)
 
             if(res.data.erroGeral){
                 setWarning(res.data.msg)
@@ -46,7 +62,7 @@ export default (props)=>{
                             descriSer: res.data.dados.resposta[0].descriSer,
                             login: res.data.dados.resposta[0].login,
                         }
-                        props.set('setAppLoggedYes', obj)
+                        setTimeout(()=>{ props.set('setAppLoggedYes', obj) }, 2000)
                     }else{
                         showErro('Erro interno, tente novamente mais tarde')
                     }
@@ -58,6 +74,22 @@ export default (props)=>{
 
         })
         .catch((e)=>{
+            console.log(e);
+            showErro('Erro interno, tente novamente mais tarde')
+        });
+    }
+
+    async function redefinitionPassword(){
+        await API('esqueci_senha', {email: userEmail})
+        .then((res)=>{
+            //console.log(res.data)
+            setShowProgress(false)
+            setWarning(res.data.msg)
+            setMsg(res.data.msg)
+            setTimeout(()=>{ setSeach(false) }, 5000)
+        })
+        .catch((e)=>{
+            setSeach(false)
             console.log(e);
             showErro('Erro interno, tente novamente mais tarde')
         });
@@ -103,15 +135,47 @@ export default (props)=>{
             />
             <Button 
                 text='Entrar'
-                func={ ()=>{ checkForm() } }
+                func={ ()=>{ setMsg('Fazendo Login...'); setSeach(true); checkForm() } }
                 colorText='#FFF'
                 colorButton={button}
             />
             <Text style={stl.warning}>{warning}</Text>
+            
             <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
+            <TouchableOpacity onPress={()=>{ checkEmail() }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Esqueci minha senha</Text></TouchableOpacity>
+            
             <View style={stl.img}>
                 <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/login.json')} />
             </View>
+
+
+            <Msg show={seach}
+                showProgress={showProgress}
+                title="Aguarde..."
+                message={msg}
+                confirmButtonColor="#080"
+                showCancelButton={false}
+                showConfirmButton={false}
+                onCancelPressed={() => { console.log('Cancelou') }}
+                onConfirmPressed={() => { console.log('Clicou em OK') }}
+            />
+
+            <Msg show={redefinition}
+                showProgress={false}
+                title="REDEFINIR SENHA"
+                message={`Desenha enviar a redefinição de senha para o email ${userEmail}?`}
+                confirmButtonColor="#080"
+                showCancelButton={true}
+                showConfirmButton={true}
+                onCancelPressed={() => { setRedefinition(false) }}
+                onConfirmPressed={() => { 
+                    setRedefinition(false)
+                    setMsg(`Aguarde alguns segundos, enviando redefinição de senha para o email ${userEmail}.`)
+                    setSeach(true)
+                    redefinitionPassword()
+                }}
+            />
+
         </View>
     );
 

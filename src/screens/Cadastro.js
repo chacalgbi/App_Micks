@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
 import InputMask from '../components/InputMask';
 import API from '../components/API';
+import Msg from '../components/Msg';
 
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
@@ -14,6 +15,7 @@ export default (props)=>{
     const [userPass, setUserPass] = useState('123456')
     const [userPassConfirm, setUserPassConfirm] = useState('123456')
     const [warning, setWarning] = useState('')
+    const [seach, setSeach] = useState(false);
     const [button, setButton] = useState('#4460D9');
     const [cel, setCel] = useState('(77) 98818-8514');
     const colorMicks = '#4460D9'
@@ -37,14 +39,17 @@ export default (props)=>{
 
         await API('insert_user', obj)
         .then((res)=>{
-            console.log(res.data)
+            //console.log(res.data)
+            setTimeout(()=>{ setSeach(false) }, 1500) 
+            
 
             if(res.data.erroGeral){
                 setWarning(res.data.msg)
 
                 if(res.data.erroGeral === 'nao'){
                     if(res.data.dados.errorBD === 'nao'){
-                        props.set('setUserAppYes', userEmail)
+                        setTimeout(()=>{ props.set('setUserAppYes', userEmail) }, 2000) 
+                        
                     }else{
                         showErro('Erro interno, tente novamente mais tarde')
                     }
@@ -56,6 +61,7 @@ export default (props)=>{
 
         })
         .catch((e)=>{
+            setSeach(false)
             console.log(e);
             showErro('Erro interno, tente novamente mais tarde')
         });
@@ -132,7 +138,7 @@ export default (props)=>{
                 />
                 <Button 
                     text='Cadastrar'
-                    func={ ()=>{ checkForm() } }
+                    func={ ()=>{ setSeach(true); checkForm() } }
                     colorText='#FFF'
                     colorButton={button}
                 />
@@ -144,6 +150,17 @@ export default (props)=>{
                 </View>
                 
             </View>
+
+            <Msg show={seach}
+                showProgress={true}
+                title="Aguarde..."
+                message={`Comunicando com nosso servidor...`}
+                confirmButtonColor="#080"
+                showCancelButton={false}
+                showConfirmButton={false}
+                onCancelPressed={() => { console.log('Cancelou') }}
+                onConfirmPressed={() => { console.log('Clicou em OK') }}
+            />
             
         </ScrollView>
     );
