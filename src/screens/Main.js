@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Linking, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ListItem, Image, SpeedDial } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
@@ -73,10 +73,10 @@ export default (props)=>{
                     onOpen={() => setOpen(!open)}
                     onClose={() => setOpen(!open)}
                 >
-                    <SpeedDial.Action icon={{ name: 'contact-support', color: '#fff' }} title="Entrar em contato"      onPress={() => console.log('Add Something')} />
-                    <SpeedDial.Action icon={{ name: 'edit',        color: '#fff' }} title="Alterar senha"          onPress={() => console.log('Add Something')} />
-                    <SpeedDial.Action icon={{ name: 'lock-open',   color: '#fff' }} title="Desbloqueio provisório" onPress={() => { setOpen(!open); setTela(2) }} />
-                    <SpeedDial.Action icon={{ name: 'exit-to-app', color: '#fff' }} title="Fazer logoff no APP"    onPress={() => { setOpen(!open); setConfirm(true)} } />
+                    <SpeedDial.Action icon={{ name: 'contact-support', color: '#fff' }} title="Suporte WhatsApp"       onPress={() => Linking.openURL('https://api.whatsapp.com/send?phone=5577988023452') } />
+                    <SpeedDial.Action icon={{ name: 'edit',            color: '#fff' }} title="Alterar senha"          onPress={() => console.log('Add Something')} />
+                    <SpeedDial.Action icon={{ name: 'lock-open',       color: '#fff' }} title="Desbloqueio provisório" onPress={() => { setOpen(!open); setTela(2) }} />
+                    <SpeedDial.Action icon={{ name: 'exit-to-app',     color: '#fff' }} title="Fazer logoff no APP"    onPress={() => { setOpen(!open); setConfirm(true)} } />
                 </SpeedDial>
 
             </SafeAreaProvider>
