@@ -45,7 +45,7 @@ export default (props)=>{
         for (const [index, cod] of arrayCoder.entries()) {
 
             await API('faturas_app', {codcli: cod }).then((res)=>{
-                console.log(res.data.msg)
+                //console.log(res.data.msg)
                 setMsg(res.data.msg)
                 setWarning(res.data.msg)
 
@@ -192,7 +192,7 @@ export default (props)=>{
             })
             .fetch('GET', `${props.ad.item.linkPDF}`,{},)
             .then((res) => {
-                console.log('The file saved to ', res.path());
+                //console.log('The file saved to ', res.path());
                 setCopyTextPdf('Download concluído!');
             })
             .catch((errorMessage, statusCode) => {
@@ -236,16 +236,16 @@ export default (props)=>{
                             minScale={1.0}
                             maxScale={4.0}
                             onLoadComplete={(numberOfPages,filePath) => {
-                                console.log(`Number of pages: ${numberOfPages}`);
+                                //console.log(`Number of pages: ${numberOfPages}`);
                             }}
                             onPageChanged={(page,numberOfPages) => {
-                                console.log(`Current page: ${page}`);
+                                //console.log(`Current page: ${page}`);
                             }}
                             onError={(error) => {
-                                console.log(error);
+                                //console.log(error);
                             }}
                             onPressLink={(uri) => {
-                                console.log(`Link pressed: ${uri}`);
+                                //console.log(`Link pressed: ${uri}`);
                             }}
                             style={stl.pdf}/>
                     </View>

@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert, TouchableOpacity, BackHandler, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, BackHandler, FlatList } from 'react-native';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
-import { BottomSheet, ListItem, Image } from 'react-native-elements';
+import { BottomSheet, ListItem } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import UsersContext from '../UserProvider';
-import LottieView from 'lottie-react-native';
-import Button from '../components/Button';
 import API from '../components/API';
 import Msg from '../components/Msg';
 
