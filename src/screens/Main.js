@@ -10,21 +10,15 @@ import Desbloqueio from './Desbloqueio';
 import Extrato from './Extrato';
 import ModificarSenha from './ModificarSenha';
 import RatingAvaliable from './RatingAvaliable';
+import Atendimento from './Atendimento';
 import { baner } from '../components/variables'
 
 export default (props)=>{
 
     const {users_data, dispatch} = useContext(UsersContext)
-    const [tela, setTela] = useState(0)
+    const [tela, setTela] = useState(6)
     const [confirm, setConfirm] = useState(false);
     const [open, setOpen] = React.useState(false);
-
-    const plans = users_data.descriSer.split(',')
-    const list = []
-
-    list.push({title: `${users_data.name}`, containerStyle: { backgroundColor: '#4F4F4F' }, titleStyle: { color: 'white' }})
-    plans.map((item, index)=>{ list.push({title: `${item}`}) })
-    list.push({ title: 'Fechar', containerStyle: { backgroundColor: 'red' }, titleStyle: { color: 'white' }, onPress: () => setIsVisible(false) })
 
     function HomeScreen() {
         
@@ -75,8 +69,8 @@ export default (props)=>{
                     onClose={() => setOpen(!open)}
                     transitionDuration={10}
                 >
-                    <SpeedDial.Action icon={{ name: 'contact-support',     color: '#fff' }} title="Suporte WhatsApp"       onPress={() => { setOpen(!open); Linking.openURL('https://api.whatsapp.com/send?phone=5577988023452') } } />
-                    <SpeedDial.Action icon={{ name: 'contact-phone',       color: '#fff' }} title="Abrir Atendimento"      onPress={() => { setOpen(!open); } } />
+                    <SpeedDial.Action icon={{ name: 'contact-support',     color: '#fff' }} title="Suporte whatsApp"       onPress={() => { setOpen(!open); Linking.openURL('https://api.whatsapp.com/send?phone=5577988023452') } } />
+                    <SpeedDial.Action icon={{ name: 'contact-phone',       color: '#fff' }} title="Relatar problema"       onPress={() => { setOpen(!open); setTela(6) } } />
                     <SpeedDial.Action icon={{ name: 'sentiment-satisfied', color: '#fff' }} title="Avalie a Micks"         onPress={() => { setOpen(!open); setTela(5) } } />
                     <SpeedDial.Action icon={{ name: 'edit',                color: '#fff' }} title="Alterar senha"          onPress={() => { setOpen(!open); setTela(4) } } />
                     <SpeedDial.Action icon={{ name: 'lock-open',           color: '#fff' }} title="Desbloqueio provisório" onPress={() => { setOpen(!open); setTela(2) }} />
@@ -98,6 +92,7 @@ export default (props)=>{
         if(tela === 3){ return <Extrato back={backTela} /> }
         if(tela === 4){ return <ModificarSenha back={backTela} /> }
         if(tela === 5){ return <RatingAvaliable back={backTela} /> }
+        if(tela === 6){ return <Atendimento back={backTela} /> }
     }
 
     return Telas()
