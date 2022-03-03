@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import UsersContext from '../UserProvider';
-import LottieView from 'lottie-react-native';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
 import API from '../components/API';
@@ -37,6 +36,7 @@ export default (props)=>{
     }
 
     async function login(){
+        setSeach(true)
         const obj = {
             email: userEmail,
             senha: userPass,
@@ -135,7 +135,7 @@ export default (props)=>{
             />
             <Button 
                 text='Entrar'
-                func={ ()=>{ setMsg('Fazendo Login...'); setSeach(true); checkForm() } }
+                func={ ()=>{ setMsg('Fazendo Login...'); checkForm() } }
                 colorText='#FFF'
                 colorButton={button}
             />
@@ -143,11 +143,6 @@ export default (props)=>{
             
             <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
             <TouchableOpacity onPress={()=>{ checkEmail() }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Esqueci minha senha</Text></TouchableOpacity>
-            
-            <View style={stl.img}>
-                <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/login.json')} />
-            </View>
-
 
             <Msg show={seach}
                 showProgress={showProgress}
@@ -194,15 +189,6 @@ const stl = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         marginBottom: 10
-    },
-    img:{
-        position: 'absolute',
-        right: 5,
-        bottom: 5,
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     formContainer: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',

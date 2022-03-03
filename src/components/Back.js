@@ -5,8 +5,8 @@ import backgroundImage from '../img/branco.jpg'
 export default (props)=>{
 
     return(
-        <ImageBackground source={backgroundImage} blurRadius={2} style={stl.background}>
-            <StatusBar backgroundColor="transparent" translucent={true} barStyle="dark-content"/>
+        <ImageBackground source={backgroundImage} blurRadius={1} style={stl.background}>
+            <StatusBar backgroundColor="#4460D9" translucent={true} barStyle="light-content"/>
             {props.children}
         </ImageBackground>
     );

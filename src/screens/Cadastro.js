@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity, ScrollView } from 'react-native';
-import LottieView from 'lottie-react-native';
 import UsersContext from '../UserProvider';
 import Button from '../components/Button';
 import AuthInput from '../components/AuthInput';
@@ -11,13 +10,13 @@ import Msg from '../components/Msg';
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
     const [userName, setUserName] = useState(users_data.name)
-    const [userEmail, setUserEmail] = useState('chacalgbi@hotmail.com')
-    const [userPass, setUserPass] = useState('123456')
-    const [userPassConfirm, setUserPassConfirm] = useState('123456')
+    const [userEmail, setUserEmail] = useState('')
+    const [userPass, setUserPass] = useState('')
+    const [userPassConfirm, setUserPassConfirm] = useState('')
     const [warning, setWarning] = useState('')
     const [seach, setSeach] = useState(false);
     const [button, setButton] = useState('#4460D9');
-    const [cel, setCel] = useState('(77) 98818-8514');
+    const [cel, setCel] = useState('');
     const colorMicks = '#4460D9'
 
     function showErro(e){
@@ -145,9 +144,6 @@ export default (props)=>{
                 <Text style={stl.warning}>{warning}</Text>
                 <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
-                <View style={stl.img}>
-                <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/success.json')} />
-                </View>
                 
             </View>
 
@@ -183,15 +179,6 @@ const stl = StyleSheet.create({
     },
     scroll:{
         flex: 1,
-    },
-    img:{
-        position: 'absolute',
-        right: 5,
-        bottom: 1,
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     formContainer: {
         flex: 1,

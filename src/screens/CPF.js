@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
-import LottieView from 'lottie-react-native';
 import UsersContext from '../UserProvider';
 import AuthInput from '../components/AuthInput';
 import Button from '../components/Button';
@@ -11,7 +10,7 @@ import ConfirmAddress from './ConfirmAddress';
 
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
-    const [cpf, setCpf] = useState('014.397.495-58');
+    const [cpf, setCpf] = useState('');
     const [warning, setWarning] = useState('');
     const [msg, setMsg] = useState('');
     const [button, setButton] = useState('#4460D9');
@@ -210,9 +209,6 @@ export default (props)=>{
                 />
                 <Text style={stl.warning}>{warning}</Text>
                 <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
-                <View style={stl.img}>
-                    <LottieView autoPlay loop style={{ width: 80, height: 80 }} source={require('../img/search.json')} />
-                </View>
             </View>
 
             <Msg show={seach}
@@ -247,15 +243,6 @@ const stl = StyleSheet.create({
         fontSize: 50,
         textAlign: 'center',
         marginBottom: 10
-    },
-    img:{
-        position: 'absolute',
-        right: 1,
-        bottom: 1,
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     subtitle: {
         color: '#FFF',

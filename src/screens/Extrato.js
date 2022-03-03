@@ -158,7 +158,7 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 15
+        marginTop: 28
     },
     conectionList:{
         flex: 1,

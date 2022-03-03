@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity, BackHandler } from 'react-native';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import UsersContext from '../UserProvider';
-import LottieView from 'lottie-react-native';
 import Button from '../components/Button';
 import API from '../components/API';
 import Msg from '../components/Msg';
@@ -99,11 +98,6 @@ export default (props)=>{
                     colorText='#FFF'
                     colorButton={button}
                 />
-                <LottieView autoPlay={ok}    loop style={{ width: 200, height: 200 }} source={require('../img/ok.json')} />
-            </View>
-
-            <View style={stl.img}>
-                <LottieView autoPlay loop style={{ width: 100, height: 100 }} source={require('../img/unlock.json')} />
             </View>
 
             <Msg show={seach}
@@ -124,16 +118,7 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 25
-    },
-    img:{
-        position: 'absolute',
-        right: 10,
-        bottom: 10,
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginTop: 28
     },
     body:{
         flex: 8,

@@ -129,7 +129,7 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 25,
+        marginTop: 28,
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'

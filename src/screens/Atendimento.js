@@ -44,8 +44,9 @@ export default (props)=>{
             setTimeout(()=>{ setSeach(false) }, 1500)
             if(res.data.erroGeral){
                 if(res.data.erroGeral === 'nao'){
-                    setMsg('Solicitação enviada com sucesso!')
-                    Alert.alert('Sucesso!', 'Sua solicitação foi enviada, em breve entraremos em contato!')
+                    let resposta = `${res.data.msg} - Em breve entraremos em contato`
+                    setMsg(resposta)
+                    Alert.alert('Atenção!', resposta)
                 }else{
                     showErro('Erro interno, tente novamente mais tarde')
                 }
@@ -160,7 +161,7 @@ const stl = StyleSheet.create({
         fontSize: 20
     },
     header:{
-        marginTop: 25,
+        marginTop: 28,
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'

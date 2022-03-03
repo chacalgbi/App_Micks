@@ -16,7 +16,7 @@ import { baner } from '../components/variables'
 export default (props)=>{
 
     const {users_data, dispatch} = useContext(UsersContext)
-    const [tela, setTela] = useState(6)
+    const [tela, setTela] = useState(0)
     const [confirm, setConfirm] = useState(false);
     const [open, setOpen] = React.useState(false);
 
