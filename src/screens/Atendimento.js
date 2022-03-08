@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert, TouchableOpacity, BackHandler, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, BackHandler, Dimensions, ScrollView } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import UsersContext from '../UserProvider';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import API from '../components/API';
 import Msg from '../components/Msg';
-import AuthInput from '../components/AuthInput';
 import InputMask from '../components/InputMask';
 import Button from '../components/Button';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default (props)=>{
     const {users_data, dispatch} = useContext(UsersContext)
@@ -114,16 +114,17 @@ export default (props)=>{
                         onChangeText={ (formatted, extracted) => {setCel(formatted)} }
                     />
 
-                    <AuthInput
-                        icon={'alert'}
-                        placeholder={'Descreva seu problema'} 
-                        colorIcon='#4460D9'
-                        multiline
-                        numberOfLines={3}
-                        style={stl.input2} 
-                        value={obs}
-                        onChangeText={ (v) => {setObs(v)} }
-                    />
+                    <View style={stl.buttonView}>
+                        <Icon name='alert' size={20} style={{color: '#4460D9', marginLeft: 10, marginRight: 10}} />
+                        <TextInput 
+                            placeholder={'Descreva seu problema'} 
+                            multiline
+                            numberOfLines={3}
+                            value={obs}
+                            onChangeText={ (v) => {setObs(v)} }
+                            style={stl.problem}
+                         />
+                    </View>
 
                     <Button 
                         text='Relatar'
@@ -158,29 +159,41 @@ const stl = StyleSheet.create({
         width: '80%'
     },
     question:{
+        color: '#000000',
         fontSize: 20
     },
     header:{
-        marginTop: 28,
+        marginTop: 50,
         flex: 1,
         alignItems: 'flex-start',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
     },
     box:{
         height: 50,
-        width: '100%',
+        width: Dimensions.get('window').width - 20,
         margin: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: '#4460D9',
+        borderWidth: 2,
+        color: '#FFF'
     },
     input: {
         height: 50,
         margin: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: '#FFF',
+        borderWidth: 2
     },
-    input2: {
-        height: 75,
-        margin: 10,
-        paddingRight: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    buttonView:{
+        height: 100,
+        width: Dimensions.get('window').width - 20,
+        backgroundColor: '#FFF',
+        borderWidth: 2,
+        borderRadius: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    problem:{
+        color: '#000000',
+        height: 85,
+        width: Dimensions.get('window').width - 75,
     }
 });

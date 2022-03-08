@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, Dimensions, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import TextInputMask from 'react-native-text-input-mask';
 
@@ -14,18 +14,20 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: 40,
-        backgroundColor: '#EEE',
+        width: Dimensions.get('window').width - 20,
+        height: 55,
+        backgroundColor: '#FFF',
         borderRadius: 20,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     icon: {
         marginLeft: 10
     },
     input: {
+        color: '#000000',
+        backgroundColor: '#FFF',
         marginLeft: 10,
-        width: '90%',
+        marginRight: 10,
     }
 })

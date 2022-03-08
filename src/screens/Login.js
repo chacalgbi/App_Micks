@@ -27,7 +27,7 @@ export default (props)=>{
 
     function checkEmail(){
         if(userEmail.length < 10 ){
-            Alert.alert('Ops! Email muito curto!', "Digite um email com pelo menos 10 caracteres.")
+            Alert.alert('Ops!!', "Digite o email cadastrado no App para recuperar a senha.")
         }else if(userEmail.indexOf('@') == -1 || userEmail.indexOf('.') == -1){
             Alert.alert('Ops! Email inválido!', "Digite um email válido.")
         }else{
@@ -141,8 +141,8 @@ export default (props)=>{
             />
             <Text style={stl.warning}>{warning}</Text>
             
-            <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
-            <TouchableOpacity onPress={()=>{ checkEmail() }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Esqueci minha senha</Text></TouchableOpacity>
+            <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{ color: '#000000', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
+            <TouchableOpacity onPress={()=>{ checkEmail() }}><Text style={{ color: '#000000', textDecorationLine: 'underline', paddingTop: 10}}>Esqueci minha senha</Text></TouchableOpacity>
 
             <Msg show={seach}
                 showProgress={showProgress}
@@ -158,7 +158,7 @@ export default (props)=>{
             <Msg show={redefinition}
                 showProgress={false}
                 title="REDEFINIR SENHA"
-                message={`Desenha enviar a redefinição de senha para o email ${userEmail}?`}
+                message={`Deseja enviar a redefinição de senha para o email ${userEmail}?`}
                 confirmButtonColor="#080"
                 showCancelButton={true}
                 showConfirmButton={true}
@@ -177,33 +177,24 @@ export default (props)=>{
 };
 
 const stl = StyleSheet.create({
-    title: {
-        fontFamily: "Cochin",
-        color: '#FFF',
-        fontSize: 25,
-        textAlign: 'center',
-        marginBottom: 10
-    },
     subtitle: {
-        color: '#FFF',
-        fontSize: 20,
+        fontSize: 24,
+        color: '#000000',
         textAlign: 'center',
-        marginBottom: 10
     },
     formContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: 20,
-        width: '90%',
-        borderRadius: 30,
-        justifyContent: 'center',
+        flex: 1,
+        marginTop: 50,
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     input: {
+        borderWidth: 2,
         marginTop: 10,
         backgroundColor: '#FFF'
     },
     warning:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 15,
         textAlign: 'center',
         marginTop: 10

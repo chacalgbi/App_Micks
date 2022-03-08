@@ -104,8 +104,8 @@ export default (props)=>{
                 </TouchableOpacity>
             </View>
             <View style={stl.body}>
-                <Text style={{fontWeight: 'bold', fontSize: 18}}>{warning}</Text>
-                <Text style={{fontWeight: 'bold', fontSize: 16, marginBottom: 7}}>{namePlain}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 18, marginBottom: 7, color: '#000000'}}>{warning}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 16, marginBottom: 7, color: '#000000'}}>{namePlain}</Text>
                 <Text style={{fontWeight: 'bold', fontSize: 13, marginBottom: 7, color: '#FF0000'}}>{total}</Text>
                 <FlatList 
                     data={conections}
@@ -158,7 +158,7 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 28
+        marginTop: 50
     },
     conectionList:{
         flex: 1,
@@ -189,12 +189,7 @@ const stl = StyleSheet.create({
         flex: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
         marginBottom: 30,
-        marginRight: 10,
-        marginLeft: 10,
-        borderRadius: 30
-
     },
     container: {
         flex: 1,
@@ -202,14 +197,16 @@ const stl = StyleSheet.create({
         alignItems: 'center',
     },
     title:{
+        color: '#000000',
         fontSize: 22,
         margin: 20
     },
     subtitle:{
+        color: '#000000',
         fontSize: 14,
     },
     warning:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 15,
     },
     viewBoletos1:{
@@ -221,9 +218,12 @@ const stl = StyleSheet.create({
         backgroundColor: 'red',
     },
     textList:{
+        color: '#000000',
         fontSize: 20,
+
     },
     textModal:{
+        color: '#000000',
         fontSize: 16,
         padding: 3,
         marginLeft: 5
@@ -233,6 +233,7 @@ const stl = StyleSheet.create({
     },
     itemTitle:{
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: 15,
+        color: '#000000',
     }
 })

@@ -155,22 +155,30 @@ export default (props)=>{
         .catch((e)=>{
             setSeach(false)
             console.log(e);
-            showErro('Erro interno, tente novamente mais tarde')
+            showErro(`Erro interno: ${e}`)
         });
     }
 
     function getCPFIntegrator(num){
         let type = ''
 
-        if(check1){
-            type = 'cnpj'
-            documentFormated = formatCnpf(num)
+        if(num.length < 11){
+            Alert.alert('Ops! Números insuficientes', 'Digite um CPF com 11 caracteres')
+        }else if(num.length > 11){
+            Alert.alert('Ops! Você digitou muitos números', 'Digite um CPF com 11 caracteres')
         }else{
-            type = 'cpf'
-            documentFormated = formatCpf(num)
-        }
+            setSeach(true)
 
-        handleRequisition(documentFormated, type)
+            if(check1){
+                type = 'cnpj'
+                documentFormated = formatCnpf(num)
+            }else{
+                type = 'cpf'
+                documentFormated = formatCpf(num)
+            }
+    
+            handleRequisition(documentFormated, type)
+        }
     }
 
 	return (
@@ -183,15 +191,6 @@ export default (props)=>{
                 <Text style={stl.title}>Olá Cliente</Text>
                 <Text style={stl.subtitle}>Digite seu {check1 ? 'CNPJ' : 'CPF'}</Text>
 
-                <View style={stl.viewCpfOrCnpj}>
-                    <CheckBox center 
-                        checkedIcon={ <Icon name="radio-button-checked" type="material" color="#00CCD3" size={35} /> }
-                        uncheckedIcon={ <Icon name="radio-button-unchecked" type="material" color="#4460D9" size={35} /> }
-                        checked={check1} onPress={ () => setCheck1(!check1) }
-                    />
-                    <Text style={stl.cpfOrCnpj}>{check1 ? 'CPF ?' : 'CNPJ ?'}</Text>
-                </View>
-
                 <AuthInput
                     icon={check1 ? 'domain' : 'account-circle'}
                     keyboardType='numeric' 
@@ -203,12 +202,22 @@ export default (props)=>{
                 />
                 <Button 
                     text='Verificar'
-                    func={ ()=>{ getCPFIntegrator(cpf); setSeach(true) } }
+                    func={ ()=>{ getCPFIntegrator(cpf) } }
                     colorText='#FFF'
                     colorButton={check1 ? '#00CCD3' : '#4460D9'}
                 />
+
+                <View style={stl.viewCpfOrCnpj}>
+                    <CheckBox center 
+                        checkedIcon={ <Icon name="radio-button-checked" type="material" color="#00CCD3" size={35} /> }
+                        uncheckedIcon={ <Icon name="radio-button-unchecked" type="material" color="#4460D9" size={35} /> }
+                        checked={check1} onPress={ () => setCheck1(!check1) }
+                    />
+                    <Text style={stl.cpfOrCnpj}>{check1 ? 'CPF ?' : 'CNPJ ?'}</Text>
+                </View>
+
                 <Text style={stl.warning}>{warning}</Text>
-                <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#000000', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
             </View>
 
             <Msg show={seach}
@@ -239,37 +248,35 @@ export default (props)=>{
 const stl = StyleSheet.create({
     title: {
         fontFamily: "Cochin",
-        color: '#FFF',
-        fontSize: 50,
+        color: '#000000',
+        fontSize: 24,
         textAlign: 'center',
         marginBottom: 10
     },
     subtitle: {
-        color: '#FFF',
+        color: '#000000',
         fontSize: 20,
         textAlign: 'center',
         marginBottom: 10
     },
     formContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 20,
-        width: '90%',
-        borderRadius: 30,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     input: {
         marginTop: 10,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        borderWidth: 2
     },
     warning:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 15,
         textAlign: 'center',
         marginTop: 10
     },
     cpfOrCnpj:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 20,
         textAlign: 'center',
         paddingRight: 15
@@ -278,7 +285,5 @@ const stl = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        borderRadius: 30
     }
 });

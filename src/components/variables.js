@@ -1,7 +1,4 @@
-const server = 'http://172.17.1.150:8080/'
-const baner  = 'http://172.17.1.150:8080/baner.jpg'
+const server = 'https://appmicks.micks.com.br:3250/';
+const baner = `${server}baner.jpg`;
 
-export{
-    server,
-    baner
-}
+export {server, baner};

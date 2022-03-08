@@ -118,50 +118,16 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 28
+        marginTop: 50
     },
     body:{
         flex: 8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        marginTop: 10,
-        marginBottom: 30,
-        marginRight: 10,
-        marginLeft: 10,
-        borderRadius: 30
-
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
+        justifyContent: "flex-start",
         alignItems: 'center',
     },
     title:{
+        color: '#000000',
         fontSize: 22,
-        margin: 20
-    },
-    subtitle:{
-        fontSize: 14,
-    },
-    warning:{
-        color: '#FFF',
-        fontSize: 15,
-    },
-    viewBoletos1:{
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    viewBoletos2:{
-        backgroundColor: 'red',
-    },
-    textList:{
-        fontSize: 20,
-    },
-    textModal:{
-        fontSize: 16,
-        padding: 3,
-        marginLeft: 5
+        margin: 10
     }
 })

@@ -294,11 +294,11 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 25
+        marginTop: 50
     },
     body:{
         flex: 8,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
 
     },
@@ -328,10 +328,12 @@ const stl = StyleSheet.create({
         width: '90%'
     },
     title:{
+        color: '#000000',
         fontSize: 18,
         marginBottom: 20
     },
     subtitle:{
+        color: '#000000',
         fontSize: 14,
     },
     viewCod:{
@@ -348,21 +350,21 @@ const stl = StyleSheet.create({
         backgroundColor: 'red',
     },
     formContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
         padding: 5,
         width: '95%',
-        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
     warning:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 15,
     },
     textList:{
+        color: '#000000',
         fontSize: 20,
     },
     textModal:{
+        color: '#000000',
         fontSize: 16,
         padding: 3,
         marginLeft: 5

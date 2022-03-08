@@ -73,10 +73,10 @@ export default (props)=>{
                     <IconMaterial name='arrow-left-circle-outline' size={50} style={{color: "#4460D9"}} />
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 9, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flex: 9, width: '100%', justifyContent: "flex-start", alignItems: 'center'}}>
                 <View style={stl.formContainer}>
 
-                    <Text style={stl.subtitle}>Mudar Senha</Text>
+                    <Text style={stl.title}>Mudar Senha</Text>
 
                     <AuthInput
                         icon={'key-variant'}
@@ -129,47 +129,31 @@ export default (props)=>{
 
 const stl = StyleSheet.create({
     header:{
-        marginTop: 28,
+        marginTop: 50,
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
     },
     title: {
         fontFamily: "Cochin",
-        color: '#FFF',
+        color: '#000000',
         fontSize: 25,
         textAlign: 'center',
         marginBottom: 10
     },
-    subtitle: {
-        color: '#FFF',
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 10
-    },
-    img:{
-        position: 'absolute',
-        right: 5,
-        bottom: 5,
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     formContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 20,
-        width: '90%',
-        borderRadius: 30,
-        justifyContent: 'center',
+        justifyContent: "flex-start",
         alignItems: 'center',
     },
     input: {
         marginTop: 10,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        color: '#000000',
+        borderWidth: 2
     },
     warning:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 15,
         textAlign: 'center',
         marginTop: 10

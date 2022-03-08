@@ -51,7 +51,7 @@ export default (props)=>{
                     <IconMaterial name='arrow-left-circle-outline' size={50} style={{color: "#4460D9"}} />
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 9, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flex: 9, width: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <View style={stl.formContainer}>
                     <Text style={stl.question}>Como você avalia o serviço da Micks?</Text>
                     <Rating
@@ -87,14 +87,14 @@ const stl = StyleSheet.create({
     formContainer: {
         flex: 1,
         width: '90%',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     question:{
         fontSize: 20
     },
     header:{
-        marginTop: 25,
+        marginTop: 50,
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'

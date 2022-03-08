@@ -54,6 +54,7 @@ export default (props)=>{
                     }
                 }else{
                     setButton('#B22222')
+                    showErro(`${res.data.msg}`)
                 }
 
             }
@@ -62,7 +63,7 @@ export default (props)=>{
         .catch((e)=>{
             setSeach(false)
             console.log(e);
-            showErro('Erro interno, tente novamente mais tarde')
+            showErro('Erro interno, tente novamente mais tarde.')
         });
     }
 
@@ -80,6 +81,7 @@ export default (props)=>{
         }else if(userPass !== userPassConfirm){
             Alert.alert('Ops! Senha não confere!', "A senha e a confirmação de senha não coincidem.")
         }else{
+            setSeach(true)
             insert()
         }
     }
@@ -87,8 +89,7 @@ export default (props)=>{
     return(
         <ScrollView style={stl.scroll}>
             <View style={stl.formContainer}>
-                <Text style={stl.title}>{users_data.name}</Text>
-                <Text style={stl.subtitle}>Vamos fazer seu cadastro</Text>
+                <Text style={stl.title}>Vamos fazer seu cadastro</Text>
                 <AuthInput
                     icon={'account-plus-outline'}
                     keyboardType='default' 
@@ -137,13 +138,13 @@ export default (props)=>{
                 />
                 <Button 
                     text='Cadastrar'
-                    func={ ()=>{ setSeach(true); checkForm() } }
+                    func={ ()=>{ checkForm() } }
                     colorText='#FFF'
                     colorButton={button}
                 />
                 <Text style={stl.warning}>{warning}</Text>
-                <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text style={{color: '#FFF', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{ props.set('jaTenhoConta', {}) }}><Text style={{color: '#000000', textDecorationLine: 'underline', paddingTop: 10}}>Já tenho uma conta</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{ props.set('setClearAll', {}) }}><Text  style={{color: '#000000', textDecorationLine: 'underline', paddingTop: 10}}>Novo usuário?</Text></TouchableOpacity>
                 
             </View>
 
@@ -166,13 +167,13 @@ export default (props)=>{
 const stl = StyleSheet.create({
     title: {
         fontFamily: "Cochin",
-        color: '#FFF',
-        fontSize: 20,
+        color: '#000000',
+        fontSize: 24,
         textAlign: 'center',
-        marginBottom: 8
+        marginBottom: 5
     },
     subtitle: {
-        color: '#FFF',
+        color: '#000000',
         fontSize: 18,
         textAlign: 'center',
         marginBottom: 10
@@ -182,20 +183,17 @@ const stl = StyleSheet.create({
     },
     formContainer: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        marginTop: 30,
-        padding: 10,
-        margin: 10,
-        borderRadius: 30,
+        marginTop: 50,
         justifyContent: 'center',
         alignItems: 'center',
     },
     input: {
         marginTop: 10,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        borderWidth: 2
     },
     warning:{
-        color: '#FFF',
+        color: '#000000',
         fontSize: 15,
         textAlign: 'center',
         marginTop: 10

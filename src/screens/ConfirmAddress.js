@@ -14,6 +14,7 @@ function AddressUnit(props){
 }
 
 export default (props) => {
+    [enredeco, setEndereco] = useState('Confirme seu endereço')
 
     function verifyCheck(id, correct){
         props.resp(correct) 
@@ -26,12 +27,12 @@ export default (props) => {
             <KeyboardAvoidingView behavior="padding" style={stl.key}>
                 <View style={stl.container}>
                     <Text style={stl.header}>{props.dataClient.client.nome_cli.replace(/[^a-z0-9\s]/gi, "").substring(26, 0)}...</Text>
-                    <Text style={stl.subHeader}>Confirme seu endereço</Text>
+                    <Text style={stl.subHeader}>{enredeco}</Text>
 
                     <FlatList 
                         data={props.dataClient.list}
                         keyExtractor={item => `${item.id}`}
-                        renderItem={(obj)=> <AddressUnit ad={obj} func={verifyCheck} /> } // o spred operator serve para passar os items do OBJ como se fosse passando cada data separadamente.
+                        renderItem={(obj)=> <AddressUnit ad={obj} func={verifyCheck} /> }
                     />
 
                 </View>
